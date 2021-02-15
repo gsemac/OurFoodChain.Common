@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OurFoodChain.Data", "OurFoo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OurFoodChain.Core", "OurFoodChain.Core\OurFoodChain.Core.csproj", "{A5E8EE9D-578C-4F7D-B7AA-52194D0A0C6F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurFoodChain.Discord", "OurFoodChain.Discord\OurFoodChain.Discord.csproj", "{A4C5237A-E204-4180-8407-BCC8DDE9CD6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A5E8EE9D-578C-4F7D-B7AA-52194D0A0C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5E8EE9D-578C-4F7D-B7AA-52194D0A0C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5E8EE9D-578C-4F7D-B7AA-52194D0A0C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4C5237A-E204-4180-8407-BCC8DDE9CD6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4C5237A-E204-4180-8407-BCC8DDE9CD6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4C5237A-E204-4180-8407-BCC8DDE9CD6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4C5237A-E204-4180-8407-BCC8DDE9CD6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
