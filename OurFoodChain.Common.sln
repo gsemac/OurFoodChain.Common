@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OurFoodChain.Data", "OurFoodChain.Data\OurFoodChain.Data.csproj", "{14340242-4CB9-4918-B9A1-DBCD7377E3D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OurFoodChain.Taxa", "OurFoodChain.Taxa\OurFoodChain.Taxa.csproj", "{A5E8EE9D-578C-4F7D-B7AA-52194D0A0C6F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OurFoodChain.Core", "OurFoodChain.Core\OurFoodChain.Core.csproj", "{A5E8EE9D-578C-4F7D-B7AA-52194D0A0C6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
