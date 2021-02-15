@@ -1,11 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using OurFoodChain.Data.Extensions;
 using OurFoodChain.Models;
+using System;
 
 namespace OurFoodChain.Data {
 
     internal static class OurFoodChainDbContextUtilities {
 
         public static void OnModelCreating(ModelBuilder modelBuilder) {
+
+            // Custom value converters are used to work with types not supported by SQLite.
+            // https://docs.microsoft.com/en-us/ef/core/providers/sqlite/limitations
+
+            modelBuilder.UseValueConverterForType<DateTimeOffset>(new UnixTimestampDateTimeOffsetValueConverter());
+            modelBuilder.UseValueConverterForType<ulong>(new UnsignedToSignedUInt64ValueConverter());
 
             // Creators
 

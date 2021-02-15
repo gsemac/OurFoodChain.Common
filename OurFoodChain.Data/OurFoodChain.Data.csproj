@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OurFoodChain.Taxa\OurFoodChain.Core.csproj" />
+    <ProjectReference Include="..\OurFoodChain.Core\OurFoodChain.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
