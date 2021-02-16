@@ -46,6 +46,9 @@ namespace OurFoodChain.Data {
                 .HasOne(e => e.DisplayedCommonName)
                 .WithOne(e => e.Clade)
                 .HasForeignKey<Clade>(e => e.DisplayedCommonNameId);
+            modelBuilder.Entity<Clade>()
+                .HasIndex(e => new { e.Rank, e.Name })
+                .IsUnique();
 
             modelBuilder.Entity<CladeCommonName>()
                 .HasIndex(e => new { e.CladeId, e.CommonName })
@@ -55,6 +58,9 @@ namespace OurFoodChain.Data {
                 .HasOne(e => e.DisplayedCommonName)
                 .WithOne(e => e.Species)
                 .HasForeignKey<Species>(e => e.DisplayedCommonNameId);
+            modelBuilder.Entity<Species>()
+                .HasIndex(e => new { e.GenusId, e.Name })
+                .IsUnique();
 
             modelBuilder.Entity<SpeciesCommonName>()
                 .HasIndex(e => new { e.SpeciesId, e.CommonName })
