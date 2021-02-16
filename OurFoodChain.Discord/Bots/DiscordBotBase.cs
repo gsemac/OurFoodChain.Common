@@ -4,7 +4,9 @@ using Discord.WebSocket;
 using Gsemac.IO.Logging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using OurFoodChain.Discord.Bots.Modules;
 using System;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace OurFoodChain.Discord.Bots {
@@ -66,6 +68,8 @@ namespace OurFoodChain.Discord.Bots {
 
             config.LogLevel = LogSeverity.Info;
 
+            OnLog.Info("Configuring client");
+
             // Required on Windows 7
 
             if (Configuration.UseWS4Net)
@@ -76,6 +80,8 @@ namespace OurFoodChain.Discord.Bots {
         }
         protected virtual async Task ConfigureServicesAsync(IServiceCollection services) {
 
+            OnLog.Info("Configuring services");
+
             services.AddSingleton(Configuration)
                 .AddSingleton(Client)
                 .AddSingleton<BaseSocketClient>(Client)
@@ -85,6 +91,16 @@ namespace OurFoodChain.Discord.Bots {
             services.TryAddSingleton<ICommandHelpService, CommandHelpService>();
 
             await Task.CompletedTask;
+
+        }
+        protected virtual async Task ConfigureCommandsAsync(global::Discord.Commands.CommandService commandService) {
+
+            OnLog.Info("Configuring commands");
+
+            await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
+
+            if (serviceProvider.GetService<ICommandHelpService>() is object)
+                await commandService.AddModuleAsync<HelpModule>(serviceProvider);
 
         }
 
@@ -152,7 +168,7 @@ namespace OurFoodChain.Discord.Bots {
 
             serviceProvider.GetService<ICommandHelpService>();
 
-            await serviceProvider.GetService<ICommandService>().InstallCommandsAsync();
+            await ConfigureCommandsAsync(serviceProvider.GetRequiredService<global::Discord.Commands.CommandService>());
 
             await ConnectAsync();
 

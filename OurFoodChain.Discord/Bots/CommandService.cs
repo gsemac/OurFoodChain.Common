@@ -34,17 +34,6 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        public async Task InstallCommandsAsync() {
-
-            OnLog.Info("Installing command modules");
-
-            await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
-
-            if(helpService is object)
-                await commandService.AddModuleAsync<HelpModule>(serviceProvider);
-
-        }
-
         // Protected members
 
         protected LogEventHelper OnLog => new LogEventHelper(GetType().Name, Log);
