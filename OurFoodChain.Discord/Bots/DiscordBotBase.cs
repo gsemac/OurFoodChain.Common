@@ -3,6 +3,7 @@ using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace OurFoodChain.Discord.Bots {
 
     public abstract class DiscordBotBase :
         IDiscordBot {
-
 
         // Public members
 
@@ -56,9 +56,15 @@ namespace OurFoodChain.Discord.Bots {
         protected DiscordSocketClient Client { get; private set; }
         protected IDiscordBotConfiguration Configuration { get; }
 
+        protected DiscordBotBase(IDiscordBotConfiguration configuration) {
+
+            Configuration = configuration;
+
+        }
+
         protected virtual async Task ConfigureDiscordClientAsync(DiscordSocketConfig config) {
 
-            config.LogLevel = global::Discord.LogSeverity.Info;
+            config.LogLevel = LogSeverity.Info;
 
             // Required on Windows 7
 
@@ -70,7 +76,13 @@ namespace OurFoodChain.Discord.Bots {
         }
         protected virtual async Task ConfigureServicesAsync(IServiceCollection services) {
 
-            services.AddSingleton(Configuration);
+            services.AddSingleton(Configuration)
+                .AddSingleton(Client)
+                .AddSingleton<BaseSocketClient>(Client)
+                .AddSingleton<global::Discord.Commands.CommandService>();
+
+            services.TryAddSingleton<ICommandService, CommandService>();
+            services.TryAddSingleton<ICommandHelpService, CommandHelpService>();
 
             await Task.CompletedTask;
 
@@ -138,9 +150,13 @@ namespace OurFoodChain.Discord.Bots {
 
             serviceProvider = services.BuildServiceProvider();
 
+            serviceProvider.GetService<ICommandHelpService>();
+
+            await serviceProvider.GetService<ICommandService>().InstallCommandsAsync();
+
             await ConnectAsync();
 
-            Client.Log += (message) => OnLogAsync(DiscordUtilities.ConvertLogMessage(message));
+            Client.Log += (message) => OnLogAsync(BotUtilities.ConvertLogMessage(message));
             Client.Ready += OnReadyAsync;
 
         }

@@ -6,6 +6,7 @@
         string Token { get; set; }
         string Playing { get; set; }
         bool UseWS4Net { get; set; }
+        bool IgnoreDirectMessages { get; set; }
 
     }
 
