@@ -88,6 +88,7 @@ namespace OurFoodChain.Discord.Bots {
                 .AddSingleton<global::Discord.Commands.CommandService>();
 
             services.TryAddSingleton<ICommandService, CommandService>();
+            services.TryAddSingleton<ICommandHelpServiceOptions, CommandHelpServiceOptions>();
             services.TryAddSingleton<ICommandHelpService, CommandHelpService>();
 
             await Task.CompletedTask;
@@ -166,11 +167,9 @@ namespace OurFoodChain.Discord.Bots {
 
             serviceProvider = services.BuildServiceProvider();
 
-            serviceProvider.GetService<ICommandHelpService>();
+            serviceProvider.GetRequiredService<ICommandService>();
 
             await ConfigureCommandsAsync(serviceProvider.GetRequiredService<global::Discord.Commands.CommandService>());
-
-            await ConnectAsync();
 
             Client.Log += (message) => OnLogAsync(BotUtilities.ConvertLogMessage(message));
             Client.Ready += OnReadyAsync;

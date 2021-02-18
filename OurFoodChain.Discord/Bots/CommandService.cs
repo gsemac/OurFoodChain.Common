@@ -3,11 +3,9 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
 using Gsemac.Text;
-using OurFoodChain.Discord.Bots.Modules;
 using OurFoodChain.Discord.Extensions;
 using System;
 using System.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -95,8 +93,7 @@ namespace OurFoodChain.Discord.Bots {
                     if (commandHelpInfo.Examples.Any()) {
 
                         string fieldTitle = "Example(s) of correct usage:";
-                        string fieldValue = string.Join(Environment.NewLine, commandHelpInfo.Examples
-                            .Select(example => FormatCommandExample(example, commandName)));
+                        string fieldValue = string.Join(Environment.NewLine, commandHelpInfo.Examples);
 
                         embedBuilder.AddField(fieldTitle, fieldValue);
 
@@ -179,20 +176,6 @@ namespace OurFoodChain.Discord.Bots {
                 Regex.Match(messageContent, @"^(.+?)\b").Groups[1].Value;
 
             return commandName;
-
-        }
-        private string FormatCommandExample(string example, string commandName) {
-
-            if (string.IsNullOrEmpty(example))
-                return string.Empty;
-
-            if (example.StartsWith(botConfiguration.Prefix))
-                example = StringUtilities.After(example, botConfiguration.Prefix).Trim();
-
-            if (example.StartsWith(commandName, StringComparison.OrdinalIgnoreCase))
-                example = StringUtilities.After(example, commandName, StringComparison.OrdinalIgnoreCase).Trim();
-
-            return $"{botConfiguration.Prefix}{commandName} {example}";
 
         }
 

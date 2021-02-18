@@ -17,6 +17,11 @@
             return $"__{str}__";
 
         }
+        public static string ToCode(this string str) {
+
+            return $"`{str}`";
+
+        }
 
     }
 

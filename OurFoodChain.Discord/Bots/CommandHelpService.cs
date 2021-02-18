@@ -1,4 +1,5 @@
 ﻿using Discord.Commands;
+using Gsemac.Text;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,19 +11,30 @@ namespace OurFoodChain.Discord.Bots {
 
         // Public members
 
-        public CommandHelpService(global::Discord.Commands.CommandService commandService) :
-            this(commandService, CommandHelpServiceOptions.Default) {
-        }
-        public CommandHelpService(global::Discord.Commands.CommandService commandService, ICommandHelpServiceOptions options) {
+        public CommandHelpService(global::Discord.Commands.CommandService commandService, ICommandHelpServiceOptions options, IDiscordBotConfiguration botConfiguration) {
 
             this.commandService = commandService;
             this.options = options;
+            this.botConfiguration = botConfiguration;
 
         }
 
         public async Task<ICommandHelpInfo> GetCommandHelpInfoAsync(string commandName) {
 
-            return await Task.FromResult(GetCommandHelpInfo(commandName));
+            return await GetCommandHelpInfoAsync(GetCommandInfo(commandName));
+
+        }
+        public async Task<ICommandHelpInfo> GetCommandHelpInfoAsync(CommandInfo commandInfo) {
+
+            ICommandHelpInfo helpInfo = GetCommandHelpInfo(commandInfo);
+
+            if (helpInfo?.Examples is object && helpInfo.Examples.Any()) {
+
+                helpInfo.Examples = helpInfo.Examples.Select(ex => FormatCommandExample(ex, commandInfo.Name));
+
+            }
+
+            return await Task.FromResult(helpInfo);
 
         }
 
@@ -30,6 +42,7 @@ namespace OurFoodChain.Discord.Bots {
 
         private readonly global::Discord.Commands.CommandService commandService;
         private readonly ICommandHelpServiceOptions options;
+        private readonly IDiscordBotConfiguration botConfiguration;
 
         private CommandInfo GetCommandInfo(string commandName) {
 
@@ -53,6 +66,21 @@ namespace OurFoodChain.Discord.Bots {
                 return null;
 
             return new CommandHelpInfo(commandInfo);
+
+        }
+
+        private string FormatCommandExample(string example, string commandName) {
+
+            if (string.IsNullOrEmpty(example))
+                return string.Empty;
+
+            if (example.StartsWith(botConfiguration.Prefix))
+                example = StringUtilities.After(example, botConfiguration.Prefix).Trim();
+
+            if (example.StartsWith(commandName, StringComparison.OrdinalIgnoreCase))
+                example = StringUtilities.After(example, commandName, StringComparison.OrdinalIgnoreCase).Trim();
+
+            return $"{botConfiguration.Prefix}{commandName} {example}";
 
         }
 
