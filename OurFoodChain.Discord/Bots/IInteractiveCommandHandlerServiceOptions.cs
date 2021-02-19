@@ -4,6 +4,7 @@
 
         int MaxInteractiveMessages { get; }
         string CancellationKeyword { get; }
+        bool IgnoreCommandsInResponseMessages { get; }
 
     }
 

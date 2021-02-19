@@ -36,7 +36,10 @@ namespace OurFoodChain.Discord.Bots {
 
             if (botConfiguration.RespondToDMs || message.Channel is not IDMChannel) {
 
-                bool handled = await HandleInteractiveMessageAsync(message);
+                bool handled = false;
+
+                if (options.IgnoreCommandsInResponseMessages || !message.Content.StartsWith(botConfiguration.Prefix, StringComparison.OrdinalIgnoreCase))
+                    handled = await HandleInteractiveMessageAsync(message);
 
                 if (!handled)
                     await base.OnMessageReceivedAsync(message);
