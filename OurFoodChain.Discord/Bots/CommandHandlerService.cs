@@ -2,6 +2,7 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
+using Gsemac.Text;
 using OurFoodChain.Discord.Extensions;
 using System;
 using System.Linq;
@@ -109,7 +110,7 @@ namespace OurFoodChain.Discord.Bots {
 
                 string suggestedCommand = commandService.Commands.Where(command => IsCommandAvailableAsync(context, command).Result)
                         .SelectMany(command => command.Aliases)
-                        .OrderBy(name => Text.StringUtilities.ComputeLevenshteinDistance(name, commandName))
+                        .OrderBy(name => StringUtilities.ComputeLevenshteinDistance(name, commandName))
                         .FirstOrDefault();
 
                 ICommandHelpInfo commandHelpInfo = await helpService.GetCommandHelpInfoAsync(suggestedCommand);
