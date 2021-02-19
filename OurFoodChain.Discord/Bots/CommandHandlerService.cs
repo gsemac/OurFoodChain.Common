@@ -45,7 +45,7 @@ namespace OurFoodChain.Discord.Bots {
 
         protected virtual async Task OnMessageReceivedAsync(IMessage message) {
 
-            if (!botConfiguration.IgnoreDirectMessages || message.Channel is not IDMChannel) {
+            if (botConfiguration.RespondToDMs || message.Channel is not IDMChannel) {
 
                 if (IsUserMessage(message) && IsCommandMessage(message))
                     await ExecuteCommandAsync(message);
@@ -86,7 +86,7 @@ namespace OurFoodChain.Discord.Bots {
 
                 if (commandHelpInfo != null) {
 
-                    EmbedBuilder embedBuilder = BotUtilities.BuildErrorEmbed($"❌ {result.ErrorReason}")
+                    EmbedBuilder embedBuilder = BotUtilities.BuildErrorEmbed(result.ErrorReason)
                         .WithTitle($"Incorrect usage of \"{commandName.ToLowerInvariant()}\" command");
 
                     if (commandHelpInfo.Examples.Any()) {
@@ -122,6 +122,25 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
+        protected bool IsCommandMessage(IMessage message) {
+
+            if (message.Content?.Trim().Equals(botConfiguration.Prefix) ?? false)
+                return false;
+
+            if (message is IUserMessage userMessage)
+                return GetCommmandArgumentsStartIndex(userMessage) != 0;
+            else
+                return false;
+
+        }
+        protected bool IsUserMessage(IMessage message) {
+
+            return message is IUserMessage userMessage &&
+                userMessage.Source == MessageSource.User &&
+                userMessage.Author.Id != discordClient.CurrentUser.Id;
+
+        }
+
         // Private members
 
         private readonly IDiscordBotConfiguration botConfiguration;
@@ -144,14 +163,6 @@ namespace OurFoodChain.Discord.Bots {
             return index;
 
         }
-        private bool IsCommandMessage(IMessage message) {
-
-            if (message is IUserMessage userMessage)
-                return GetCommmandArgumentsStartIndex(userMessage) != 0;
-            else
-                return false;
-
-        }
         private string GetCommandNameFromMessage(IMessage message) {
 
             if (message is null)
@@ -172,11 +183,6 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        private static bool IsUserMessage(IMessage message) {
-
-            return message is IUserMessage userMessage && userMessage.Source == MessageSource.User;
-
-        }
         private static async Task ReplyGenericCommandErrorAsync(Optional<CommandInfo> command, ICommandContext context, IResult result) {
 
             if (result is null) {

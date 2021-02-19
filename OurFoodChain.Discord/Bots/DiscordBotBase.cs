@@ -88,7 +88,9 @@ namespace OurFoodChain.Discord.Bots {
                 .AddSingleton<BaseSocketClient>(Client)
                 .AddSingleton<CommandService>();
 
-            services.TryAddSingleton<ICommandHandlerService, CommandHandlerService>();
+            services.TryAddSingleton<IInteractiveCommandHandlerServiceOptions, InteractiveCommandHandlerServiceOptions>();
+            services.TryAddSingleton<InteractiveCommandHandlerService>();
+            services.TryAddSingleton<ICommandHandlerService>(provider => provider.GetService<InteractiveCommandHandlerService>());
             services.TryAddSingleton<ICommandHelpServiceOptions, CommandHelpServiceOptions>();
             services.TryAddSingleton<ICommandHelpService, CommandHelpService>();
 

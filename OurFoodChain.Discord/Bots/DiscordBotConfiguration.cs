@@ -7,7 +7,7 @@
         public string Token { get; set; }
         public string Playing { get; set; }
         public bool UseWS4Net { get; set; } = true;
-        public bool IgnoreDirectMessages { get; set; } = false;
+        public bool RespondToDMs { get; set; } = true;
 
         public static DiscordBotConfiguration Default => new DiscordBotConfiguration();
 

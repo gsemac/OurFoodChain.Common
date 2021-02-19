@@ -90,6 +90,16 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
         }
 
+        [Command("test", RunMode = RunMode.Async)]
+        public async Task Test() {
+
+            IMessage message = await GetReplyAsync();
+
+            if (message is object)
+                await ReplyAsync(message.Content);
+
+        }
+
         // Private members
 
         private const string DefaultCommandCategory = "general";
