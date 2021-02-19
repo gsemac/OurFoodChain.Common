@@ -11,11 +11,11 @@ namespace OurFoodChain.Discord.Bots {
 
         // Public members
 
-        public CommandHelpService(global::Discord.Commands.CommandService commandService, ICommandHelpServiceOptions options, IDiscordBotConfiguration botConfiguration) {
+        public CommandHelpService(CommandService commandService, IDiscordBotConfiguration botConfiguration, ICommandHelpServiceOptions options) {
 
             this.commandService = commandService;
-            this.options = options;
             this.botConfiguration = botConfiguration;
+            this.options = options;
 
         }
 
@@ -40,7 +40,7 @@ namespace OurFoodChain.Discord.Bots {
 
         // Private members
 
-        private readonly global::Discord.Commands.CommandService commandService;
+        private readonly CommandService commandService;
         private readonly ICommandHelpServiceOptions options;
         private readonly IDiscordBotConfiguration botConfiguration;
 

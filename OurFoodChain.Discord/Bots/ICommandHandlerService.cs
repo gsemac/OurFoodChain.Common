@@ -1,6 +1,6 @@
 ﻿namespace OurFoodChain.Discord.Bots {
 
-    public interface ICommandService {
+    public interface ICommandHandlerService {
     }
 
 }

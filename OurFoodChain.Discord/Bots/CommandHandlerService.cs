@@ -2,7 +2,6 @@
 using Discord.Commands;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
-using Gsemac.Text;
 using OurFoodChain.Discord.Extensions;
 using System;
 using System.Linq;
@@ -11,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace OurFoodChain.Discord.Bots {
 
-    public class CommandService :
-          ICommandService {
+    public class CommandHandlerService :
+          ICommandHandlerService {
 
         // Public members
 
         public event LogEventHandler Log;
 
-        public CommandService(global::Discord.Commands.CommandService commandService, ICommandHelpService helpService, BaseSocketClient discordClient, IServiceProvider serviceProvider, IDiscordBotConfiguration botConfiguration) {
+        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, ICommandHelpService helpService, IServiceProvider serviceProvider, IDiscordBotConfiguration botConfiguration) {
 
             this.botConfiguration = botConfiguration;
             this.commandService = commandService;
@@ -126,12 +125,12 @@ namespace OurFoodChain.Discord.Bots {
         // Private members
 
         private readonly IDiscordBotConfiguration botConfiguration;
-        private readonly global::Discord.Commands.CommandService commandService;
+        private readonly CommandService commandService;
         private readonly ICommandHelpService helpService;
         private readonly BaseSocketClient discordClient;
         private readonly IServiceProvider serviceProvider;
 
-        protected int GetCommmandArgumentsStartIndex(IMessage message) {
+        private int GetCommmandArgumentsStartIndex(IMessage message) {
 
             int index = 0;
 
@@ -145,23 +144,12 @@ namespace OurFoodChain.Discord.Bots {
             return index;
 
         }
-        private bool IsUserMessage(IMessage message) {
-
-            return message is IUserMessage userMessage && userMessage.Source == MessageSource.User;
-
-        }
         private bool IsCommandMessage(IMessage message) {
 
             if (message is IUserMessage userMessage)
                 return GetCommmandArgumentsStartIndex(userMessage) != 0;
             else
                 return false;
-
-        }
-
-        private async Task<bool> IsCommandAvailableAsync(ICommandContext context, CommandInfo commandInfo) {
-
-            return (await commandInfo.CheckPreconditionsAsync(context, serviceProvider)).IsSuccess;
 
         }
         private string GetCommandNameFromMessage(IMessage message) {
@@ -178,8 +166,18 @@ namespace OurFoodChain.Discord.Bots {
             return commandName;
 
         }
+        private async Task<bool> IsCommandAvailableAsync(ICommandContext context, CommandInfo commandInfo) {
 
-        private async Task ReplyGenericCommandErrorAsync(Optional<CommandInfo> command, ICommandContext context, IResult result) {
+            return (await commandInfo.CheckPreconditionsAsync(context, serviceProvider)).IsSuccess;
+
+        }
+
+        private static bool IsUserMessage(IMessage message) {
+
+            return message is IUserMessage userMessage && userMessage.Source == MessageSource.User;
+
+        }
+        private static async Task ReplyGenericCommandErrorAsync(Optional<CommandInfo> command, ICommandContext context, IResult result) {
 
             if (result is null) {
 

@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Discord.Commands;
 using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
@@ -85,16 +86,16 @@ namespace OurFoodChain.Discord.Bots {
             services.AddSingleton(Configuration)
                 .AddSingleton(Client)
                 .AddSingleton<BaseSocketClient>(Client)
-                .AddSingleton<global::Discord.Commands.CommandService>();
+                .AddSingleton<CommandService>();
 
-            services.TryAddSingleton<ICommandService, CommandService>();
+            services.TryAddSingleton<ICommandHandlerService, CommandHandlerService>();
             services.TryAddSingleton<ICommandHelpServiceOptions, CommandHelpServiceOptions>();
             services.TryAddSingleton<ICommandHelpService, CommandHelpService>();
 
             await Task.CompletedTask;
 
         }
-        protected virtual async Task ConfigureCommandsAsync(global::Discord.Commands.CommandService commandService) {
+        protected virtual async Task ConfigureCommandsAsync(CommandService commandService) {
 
             OnLog.Info("Configuring commands");
 
@@ -167,9 +168,9 @@ namespace OurFoodChain.Discord.Bots {
 
             serviceProvider = services.BuildServiceProvider();
 
-            serviceProvider.GetRequiredService<ICommandService>();
+            serviceProvider.GetRequiredService<ICommandHandlerService>();
 
-            await ConfigureCommandsAsync(serviceProvider.GetRequiredService<global::Discord.Commands.CommandService>());
+            await ConfigureCommandsAsync(serviceProvider.GetRequiredService<CommandService>());
 
             Client.Log += (message) => OnLogAsync(BotUtilities.ConvertLogMessage(message));
             Client.Ready += OnReadyAsync;
