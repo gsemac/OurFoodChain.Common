@@ -1,6 +1,6 @@
 ﻿namespace OurFoodChain.Discord.Bots {
 
-    public interface IDiscordBotConfiguration {
+    public interface IDiscordBotOptions {
 
         string Prefix { get; set; }
         string Token { get; set; }

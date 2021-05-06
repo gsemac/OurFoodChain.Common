@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using OurFoodChain.Discord.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,12 @@ using System.Threading.Tasks;
 namespace OurFoodChain.Discord.Bots {
 
     public class InteractiveCommandHandlerService :
-        CommandHandlerService {
+        CommandHandlerService,
+        IInteractiveMessageService {
 
         // Public members
 
-        public InteractiveCommandHandlerService(CommandService commandService, BaseSocketClient discordClient, ICommandHelpService helpService, IServiceProvider serviceProvider, IDiscordBotConfiguration botConfiguration, IInteractiveCommandHandlerServiceOptions options) :
+        public InteractiveCommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, IInteractiveMessageServiceOptions options) :
             base(commandService, discordClient, helpService, serviceProvider, botConfiguration) {
 
             this.botConfiguration = botConfiguration;
@@ -24,7 +26,7 @@ namespace OurFoodChain.Discord.Bots {
 
         public async Task<IMessage> GetNextMessageAsync(ICommandContext context, IInteractionOptions options = null) {
 
-            InteractiveMessage interactiveMessage = new InteractiveMessage(context, options ?? InteractionOptions.Default);
+            InteractiveMessageInfo interactiveMessage = new InteractiveMessageInfo(context, options ?? InteractionOptions.Default);
 
             return await WaitForReplyAsync(interactiveMessage);
 
@@ -34,11 +36,11 @@ namespace OurFoodChain.Discord.Bots {
 
         protected override async Task OnMessageReceivedAsync(IMessage message) {
 
-            if (botConfiguration.RespondToDMs || message.Channel is not IDMChannel) {
+            if (botConfiguration.RespondToDMs || !message.IsDM()) {
 
                 bool handled = false;
 
-                if (options.IgnoreCommandsInResponseMessages || !message.Content.StartsWith(botConfiguration.Prefix, StringComparison.OrdinalIgnoreCase))
+                if (options.IgnorePrefixInReplies || !message.Content.StartsWith(botConfiguration.Prefix, StringComparison.OrdinalIgnoreCase))
                     handled = await HandleInteractiveMessageAsync(message);
 
                 if (!handled)
@@ -50,7 +52,7 @@ namespace OurFoodChain.Discord.Bots {
 
         // Private members
 
-        private sealed class InteractiveMessage :
+        private sealed class InteractiveMessageInfo :
             IDisposable {
 
             public ICommandContext Context { get; set; }
@@ -59,7 +61,7 @@ namespace OurFoodChain.Discord.Bots {
             public ManualResetEvent ResetEvent { get; set; } = new ManualResetEvent(false);
             public bool Cancelled { get; set; } = false;
 
-            public InteractiveMessage(ICommandContext context, IInteractionOptions options) {
+            public InteractiveMessageInfo(ICommandContext context, IInteractionOptions options) {
 
                 this.Context = context;
                 this.Options = options;
@@ -75,23 +77,23 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        private readonly IDiscordBotConfiguration botConfiguration;
-        private readonly IInteractiveCommandHandlerServiceOptions options;
-        private readonly IList<InteractiveMessage> interactiveMessages = new List<InteractiveMessage>();
+        private readonly IDiscordBotOptions botConfiguration;
+        private readonly IInteractiveMessageServiceOptions options;
+        private readonly IList<InteractiveMessageInfo> interactiveMessages = new List<InteractiveMessageInfo>();
         private readonly object interactiveMessagesMutex = new object();
 
-        private async Task RegisterInteractiveMessageAsync(InteractiveMessage interactiveMessage) {
+        private async Task RegisterInteractiveMessageAsync(InteractiveMessageInfo interactiveMessage) {
 
-            IEnumerable<InteractiveMessage> interactiveMessages;
+            IEnumerable<InteractiveMessageInfo> interactiveMessages;
 
             lock (interactiveMessagesMutex)
                 interactiveMessages = this.interactiveMessages.ToArray();
 
-            if (options.MaxInteractiveMessages > 0 && interactiveMessages.Count() >= options.MaxInteractiveMessages) {
+            if (options.MaxMessageCount > 0 && interactiveMessages.Count() >= options.MaxMessageCount) {
 
                 // Remove the oldest message.
 
-                InteractiveMessage oldestInteractiveMessage = interactiveMessages
+                InteractiveMessageInfo oldestInteractiveMessage = interactiveMessages
                     .OrderBy(m => m.Context.Message.Timestamp)
                     .FirstOrDefault();
 
@@ -103,7 +105,7 @@ namespace OurFoodChain.Discord.Bots {
                 this.interactiveMessages.Add(interactiveMessage);
 
         }
-        private async Task DeregisterInteractiveMessageAsync(InteractiveMessage interactiveMessage) {
+        private async Task DeregisterInteractiveMessageAsync(InteractiveMessageInfo interactiveMessage) {
 
             lock (interactiveMessagesMutex)
                 interactiveMessages.Remove(interactiveMessage);
@@ -120,12 +122,12 @@ namespace OurFoodChain.Discord.Bots {
             if (!IsUserMessage(message))
                 return false;
 
-            IEnumerable<InteractiveMessage> interactiveMessages;
+            IEnumerable<InteractiveMessageInfo> interactiveMessages;
 
             lock (interactiveMessagesMutex)
                 interactiveMessages = this.interactiveMessages.ToArray();
 
-            InteractiveMessage interactiveMessage = interactiveMessages
+            InteractiveMessageInfo interactiveMessage = interactiveMessages
                 .Where(m => !m.Options.RequireSourceUser || m.Context.Message.Author.Id == message.Author.Id)
                 .Where(m => !m.Options.RequireSourceChannel || m.Context.Channel.Id == message.Channel.Id)
                 .OrderBy(m => m.Context.Message.Timestamp)
@@ -149,7 +151,7 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        private async Task<IMessage> WaitForReplyAsync(InteractiveMessage interactiveMessage) {
+        private async Task<IMessage> WaitForReplyAsync(InteractiveMessageInfo interactiveMessage) {
 
             await RegisterInteractiveMessageAsync(interactiveMessage);
 

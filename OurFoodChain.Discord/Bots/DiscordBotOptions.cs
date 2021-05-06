@@ -1,7 +1,7 @@
 ﻿namespace OurFoodChain.Discord.Bots {
 
-    public class DiscordBotConfiguration :
-        IDiscordBotConfiguration {
+    public class DiscordBotOptions :
+        IDiscordBotOptions {
 
         public string Prefix { get; set; } = "?";
         public string Token { get; set; }
@@ -9,11 +9,11 @@
         public bool UseWS4Net { get; set; } = true;
         public bool RespondToDMs { get; set; } = true;
 
-        public static DiscordBotConfiguration Default => new DiscordBotConfiguration();
+        public static DiscordBotOptions Default => new DiscordBotOptions();
 
-        public DiscordBotConfiguration() {
+        public DiscordBotOptions() {
         }
-        public DiscordBotConfiguration(string token) {
+        public DiscordBotOptions(string token) {
 
             Token = token;
 

@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="2.3.0" />
-    <PackageReference Include="Discord.Net.Providers.WS4Net" Version="2.3.0" />
-    <PackageReference Include="Gsemac.Collections" Version="0.2.2" />
-    <PackageReference Include="Gsemac.IO" Version="0.8.0" />
-    <PackageReference Include="Gsemac.Reflection" Version="0.3.0" />
-    <PackageReference Include="Gsemac.Text" Version="0.5.1" />
+    <PackageReference Include="Discord.Net" Version="2.1.1" />
+    <PackageReference Include="Discord.Net.Providers.WS4Net" Version="2.1.1" />
+    <PackageReference Include="Gsemac.Collections" Version="0.3.0" />
+    <PackageReference Include="Gsemac.IO" Version="0.11.1" />
+    <PackageReference Include="Gsemac.Reflection" Version="0.5.1" />
+    <PackageReference Include="Gsemac.Text" Version="0.7.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>

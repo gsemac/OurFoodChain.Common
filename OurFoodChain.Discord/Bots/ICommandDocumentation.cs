@@ -2,7 +2,7 @@
 
 namespace OurFoodChain.Discord.Bots {
 
-    public interface ICommandHelpInfo {
+    public interface ICommandDocumentation {
 
         string Name { get; set; }
         IEnumerable<string> Aliases { get; set; }

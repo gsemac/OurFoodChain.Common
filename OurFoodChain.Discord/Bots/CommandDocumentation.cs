@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace OurFoodChain.Discord.Bots {
 
-    public class CommandHelpInfo :
-        ICommandHelpInfo {
+    public class CommandDocumentation :
+        ICommandDocumentation {
 
         // Public members
 
@@ -16,12 +16,12 @@ namespace OurFoodChain.Discord.Bots {
         public ICollection<string> Aliases { get; set; } = new List<string>();
         public ICollection<string> Examples { get; set; } = new List<string>();
 
-        public CommandHelpInfo(string commandName) {
+        public CommandDocumentation(string commandName) {
 
             Name = commandName;
 
         }
-        public CommandHelpInfo(CommandInfo commandInfo) {
+        public CommandDocumentation(CommandInfo commandInfo) {
 
             Name = commandInfo.Name;
             Summary = commandInfo.Summary;
@@ -29,11 +29,11 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        IEnumerable<string> ICommandHelpInfo.Aliases {
+        IEnumerable<string> ICommandDocumentation.Aliases {
             get => Aliases;
             set => Aliases = new List<string>(value);
         }
-        IEnumerable<string> ICommandHelpInfo.Examples {
+        IEnumerable<string> ICommandDocumentation.Examples {
             get => Examples;
             set => Examples = new List<string>(value);
         }

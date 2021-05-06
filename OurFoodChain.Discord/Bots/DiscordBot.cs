@@ -5,7 +5,7 @@
 
         // Public members
 
-        public DiscordBot(IDiscordBotConfiguration configuration) :
+        public DiscordBot(IDiscordBotOptions configuration) :
             base(configuration) {
         }
 

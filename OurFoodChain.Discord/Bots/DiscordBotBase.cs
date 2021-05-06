@@ -57,9 +57,9 @@ namespace OurFoodChain.Discord.Bots {
 
         protected LogEventHelper OnLog => new LogEventHelper(GetType().Name, Log);
         protected DiscordSocketClient Client { get; private set; }
-        protected IDiscordBotConfiguration Configuration { get; }
+        protected IDiscordBotOptions Configuration { get; }
 
-        protected DiscordBotBase(IDiscordBotConfiguration configuration) {
+        protected DiscordBotBase(IDiscordBotOptions configuration) {
 
             Configuration = configuration;
 
@@ -88,11 +88,12 @@ namespace OurFoodChain.Discord.Bots {
                 .AddSingleton<BaseSocketClient>(Client)
                 .AddSingleton<CommandService>();
 
-            services.TryAddSingleton<IInteractiveCommandHandlerServiceOptions, InteractiveCommandHandlerServiceOptions>();
-            services.TryAddSingleton<InteractiveCommandHandlerService>();
-            services.TryAddSingleton<ICommandHandlerService>(provider => provider.GetService<InteractiveCommandHandlerService>());
-            services.TryAddSingleton<ICommandHelpServiceOptions, CommandHelpServiceOptions>();
-            services.TryAddSingleton<ICommandHelpService, CommandHelpService>();
+            services.TryAddSingleton<IInteractiveMessageServiceOptions, InteractiveMessageServiceOptions>();
+            services.TryAddSingleton<IInteractiveMessageService, InteractiveCommandHandlerService>();
+            services.TryAddSingleton<ICommandHandlerService>(provider => provider.GetRequiredService<IInteractiveMessageService>() as InteractiveCommandHandlerService);
+            services.TryAddSingleton<IDocumentationServiceOptions, DocumentationServiceOptions>();
+            services.TryAddSingleton<IDocumentationService, DocumentationService>();
+            services.TryAddSingleton<IPaginatedMessageService, PaginatedMessageService>();
 
             await Task.CompletedTask;
 
@@ -103,14 +104,14 @@ namespace OurFoodChain.Discord.Bots {
 
             await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
 
-            if (serviceProvider.GetService<ICommandHelpService>() is object)
+            if (serviceProvider.GetService<IDocumentationService>() is object)
                 await commandService.AddModuleAsync<HelpModule>(serviceProvider);
 
         }
 
         protected virtual async Task OnLogAsync(ILogMessage message) {
 
-            OnLog.OnLog(message);
+            OnLog.Log(message);
 
             await Task.CompletedTask;
 

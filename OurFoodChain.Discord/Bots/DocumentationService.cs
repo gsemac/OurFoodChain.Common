@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace OurFoodChain.Discord.Bots {
 
-    public class CommandHelpService :
-        ICommandHelpService {
+    public class DocumentationService :
+        IDocumentationService {
 
         // Public members
 
-        public CommandHelpService(CommandService commandService, IDiscordBotConfiguration botConfiguration, ICommandHelpServiceOptions options) {
+        public DocumentationService(CommandService commandService, IDiscordBotOptions botConfiguration, IDocumentationServiceOptions options) {
 
             this.commandService = commandService;
             this.botConfiguration = botConfiguration;
@@ -19,14 +19,14 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        public async Task<ICommandHelpInfo> GetCommandHelpInfoAsync(string commandName) {
+        public async Task<ICommandDocumentation> GetCommandInfoAsync(string commandName) {
 
-            return await GetCommandHelpInfoAsync(GetCommandInfo(commandName));
+            return await GetCommandDocumentationAsync(GetCommandInfo(commandName));
 
         }
-        public async Task<ICommandHelpInfo> GetCommandHelpInfoAsync(CommandInfo commandInfo) {
+        public async Task<ICommandDocumentation> GetCommandDocumentationAsync(CommandInfo commandInfo) {
 
-            ICommandHelpInfo helpInfo = GetCommandHelpInfo(commandInfo);
+            ICommandDocumentation helpInfo = GetCommandHelpInfo(commandInfo);
 
             if (helpInfo?.Examples is object && helpInfo.Examples.Any()) {
 
@@ -41,8 +41,8 @@ namespace OurFoodChain.Discord.Bots {
         // Private members
 
         private readonly CommandService commandService;
-        private readonly ICommandHelpServiceOptions options;
-        private readonly IDiscordBotConfiguration botConfiguration;
+        private readonly IDocumentationServiceOptions options;
+        private readonly IDiscordBotOptions botConfiguration;
 
         private CommandInfo GetCommandInfo(string commandName) {
 
@@ -55,17 +55,17 @@ namespace OurFoodChain.Discord.Bots {
             return commandInfo;
 
         }
-        private ICommandHelpInfo GetCommandHelpInfo(string commandName) {
+        private ICommandDocumentation GetCommandHelpInfo(string commandName) {
 
             return GetCommandHelpInfo(GetCommandInfo(commandName));
 
         }
-        private ICommandHelpInfo GetCommandHelpInfo(CommandInfo commandInfo) {
+        private ICommandDocumentation GetCommandHelpInfo(CommandInfo commandInfo) {
 
             if (commandInfo is null)
                 return null;
 
-            return new CommandHelpInfo(commandInfo);
+            return new CommandDocumentation(commandInfo);
 
         }
 

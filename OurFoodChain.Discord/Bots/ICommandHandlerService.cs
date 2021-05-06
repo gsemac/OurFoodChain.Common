@@ -1,6 +1,9 @@
-﻿namespace OurFoodChain.Discord.Bots {
+﻿using Gsemac.IO.Logging;
 
-    public interface ICommandHandlerService {
+namespace OurFoodChain.Discord.Bots {
+
+    public interface ICommandHandlerService :
+        ILogEventSource {
     }
 
 }

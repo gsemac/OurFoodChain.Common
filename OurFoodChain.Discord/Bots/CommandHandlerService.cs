@@ -18,7 +18,7 @@ namespace OurFoodChain.Discord.Bots {
 
         public event LogEventHandler Log;
 
-        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, ICommandHelpService helpService, IServiceProvider serviceProvider, IDiscordBotConfiguration botConfiguration) {
+        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration) {
 
             this.botConfiguration = botConfiguration;
             this.commandService = commandService;
@@ -38,7 +38,7 @@ namespace OurFoodChain.Discord.Bots {
 
         protected async Task OnLogAsync(ILogMessage message) {
 
-            OnLog.OnLog(message);
+            OnLog.Log(message);
 
             await Task.CompletedTask;
 
@@ -46,7 +46,7 @@ namespace OurFoodChain.Discord.Bots {
 
         protected virtual async Task OnMessageReceivedAsync(IMessage message) {
 
-            if (botConfiguration.RespondToDMs || message.Channel is not IDMChannel) {
+            if (botConfiguration.RespondToDMs || !message.IsDM()) {
 
                 if (IsUserMessage(message) && IsCommandMessage(message))
                     await ExecuteCommandAsync(message);
@@ -83,7 +83,7 @@ namespace OurFoodChain.Discord.Bots {
 
                 // If help documentation exists for this command, display it.
 
-                ICommandHelpInfo commandHelpInfo = await helpService.GetCommandHelpInfoAsync(commandName);
+                ICommandDocumentation commandHelpInfo = await helpService.GetCommandInfoAsync(commandName);
 
                 if (commandHelpInfo != null) {
 
@@ -113,7 +113,7 @@ namespace OurFoodChain.Discord.Bots {
                         .OrderBy(name => StringUtilities.ComputeLevenshteinDistance(name, commandName))
                         .FirstOrDefault();
 
-                ICommandHelpInfo commandHelpInfo = await helpService.GetCommandHelpInfoAsync(suggestedCommand);
+                ICommandDocumentation commandHelpInfo = await helpService.GetCommandInfoAsync(suggestedCommand);
 
                 await BotUtilities.ReplyErrorAsync(context.Channel, $"Unknown command. Did you mean {commandHelpInfo.Name.ToBold()}?");
 
@@ -144,9 +144,9 @@ namespace OurFoodChain.Discord.Bots {
 
         // Private members
 
-        private readonly IDiscordBotConfiguration botConfiguration;
+        private readonly IDiscordBotOptions botConfiguration;
         private readonly CommandService commandService;
-        private readonly ICommandHelpService helpService;
+        private readonly IDocumentationService helpService;
         private readonly BaseSocketClient discordClient;
         private readonly IServiceProvider serviceProvider;
 

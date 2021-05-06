@@ -32,7 +32,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
             // Pair each command with its help info and sort them according to their category.
 
-            IEnumerable<ICommandHelpInfo> commandsInfo = commands.Select(command => HelpService.GetCommandHelpInfoAsync(command).Result);
+            IEnumerable<ICommandDocumentation> commandsInfo = commands.Select(command => DocumentationService.GetCommandDocumentationAsync(command).Result);
 
             var commandsByCategory = commands.Zip(commandsInfo).
                 GroupBy(pair => string.IsNullOrWhiteSpace(pair.Second.Category) ? DefaultCommandCategory : pair.Second.Category).
@@ -48,7 +48,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
                     EmbedBuilder embedBuilder = new EmbedBuilder()
                         .WithTitle("Commands")
-                        .WithDescription($"To learn more about a command, use `{Configuration.Prefix}help <command>` (e.g. `{Configuration.Prefix}help {commands.First().Name}`).")
+                        .WithDescription($"To learn more about a command, use `{Config.Prefix}help <command>` (e.g. `{Config.Prefix}help {commands.First().Name}`).")
                         .WithFooter(GetHelpEmbedFooter());
 
                     foreach (var commandGroup in commandsByCategory) {
@@ -90,15 +90,17 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
         }
 
-        [Command("test", RunMode = RunMode.Async)]
-        public async Task Test() {
+        //[Command("test", RunMode = RunMode.Async)]
+        //public async Task Test() {
 
-            IMessage message = await GetReplyAsync();
+        //    IUserMessage message = await ReplyAsync("test");
 
-            if (message is object)
-                await ReplyAsync(message.Content);
+        //    await message.AddReactionsAsync(new[] {
+        //        new Emoji("👍"),
+        //        new Emoji("👎"),
+        //    });
 
-        }
+        //}
 
         // Private members
 
@@ -106,7 +108,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
         private static string GetHelpEmbedFooter() {
 
-            return $"{EntryAssemblyInfo.GetProductName()} v{EntryAssemblyInfo.GetProductVersion()}";
+            return $"{AssemblyInfo.EntryAssembly.ProductName} v{AssemblyInfo.EntryAssembly.ProductVersion}";
 
         }
 

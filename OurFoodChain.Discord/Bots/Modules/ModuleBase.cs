@@ -10,16 +10,17 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
         // Public members
 
-        public IDiscordBotConfiguration Configuration { get; set; }
+        public IDiscordBotOptions Config { get; set; }
         public CommandService CommandService { get; set; }
-        public ICommandHelpService HelpService { get; set; }
-        public InteractiveCommandHandlerService InteractiveCommandHandlerService { get; set; }
-        public IInteractiveCommandHandlerServiceOptions InteractiveCommandHandlerServiceOptions { get; set; }
+        public IDocumentationService DocumentationService { get; set; }
+        public IInteractiveMessageService InteractiveMessageService { get; set; }
+        public IInteractiveMessageServiceOptions InteractiveMessageServiceOptions { get; set; }
+        public IPaginatedMessageService PaginatedMessageService { get; set; }
 
         public async Task<IMessage> GetNextMessageAsync(IInteractionOptions options = null) {
 
-            if (InteractiveCommandHandlerService is object)
-                return await InteractiveCommandHandlerService.GetNextMessageAsync(Context, options);
+            if (InteractiveMessageService is object)
+                return await InteractiveMessageService.GetNextMessageAsync(Context, options);
 
             return null;
 
@@ -29,17 +30,17 @@ namespace OurFoodChain.Discord.Bots.Modules {
             message ??= "";
             options ??= InteractionOptions.Default;
 
-            if (options.AllowCancellation && InteractiveCommandHandlerServiceOptions is object)
-                message += $"\nReply with {InteractiveCommandHandlerServiceOptions.CancellationKeyword.ToLowerInvariant().ToCode()} to cancel the command.";
+            if (options.AllowCancellation && InteractiveMessageServiceOptions is object)
+                message += $"\nReply with {InteractiveMessageServiceOptions.CancellationKeyword.ToLowerInvariant().ToCode()} to cancel the command.";
 
             message = message.Trim();
 
             if (!string.IsNullOrWhiteSpace(message) || embed is object)
                 await Context.Channel.SendMessageAsync(text: message, isTTS: isTTS, embed: embed);
 
-            if (InteractiveCommandHandlerService is object) {
+            if (InteractiveMessageService is object) {
 
-                IMessage response = await InteractiveCommandHandlerService.GetNextMessageAsync(Context, options);
+                IMessage response = await InteractiveMessageService.GetNextMessageAsync(Context, options);
 
                 if (response is null)
                     await ReplyAsync(embed: BotUtilities.BuildInfoEmbed("The command was cancelled.").Build());
@@ -49,6 +50,12 @@ namespace OurFoodChain.Discord.Bots.Modules {
             }
 
             return null;
+
+        }
+
+        public async Task<IMessage> ReplyAsync(IPaginatedMessage paginatedMessage, IPaginationOptions options = null) {
+
+            return await PaginatedMessageService.SendPaginatedMessageAsync(Context, paginatedMessage, options);
 
         }
 
