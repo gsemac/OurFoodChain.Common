@@ -1,22 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="2.4.0" />
-    <PackageReference Include="Discord.Net.Providers.WS4Net" Version="2.4.0" />
-    <PackageReference Include="Gsemac.Collections" Version="0.5.0" />
-    <PackageReference Include="Gsemac.IO" Version="0.14.0" />
-    <PackageReference Include="Gsemac.Reflection" Version="0.6.0" />
-    <PackageReference Include="Gsemac.Text" Version="0.7.2" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <Folder Include="Modules\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OurFoodChain.Core\OurFoodChain.Core.csproj" />
+    <ProjectReference Include="..\Gsemac.Discord\Gsemac.Discord.csproj" />
   </ItemGroup>
 
 </Project>
