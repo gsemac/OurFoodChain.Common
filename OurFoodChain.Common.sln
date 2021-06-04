@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gsemac.Discord", "Gsemac.Di
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OurFoodChain.Discord", "OurFoodChain.Discord\OurFoodChain.Discord.csproj", "{3ACFD7A5-FEE9-4CBC-A03B-D0A76CBC1268}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsemac.Data", "Gsemac.Data\Gsemac.Data.csproj", "{5AB88D73-9945-419C-8C9C-0F0DE3502786}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{3ACFD7A5-FEE9-4CBC-A03B-D0A76CBC1268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3ACFD7A5-FEE9-4CBC-A03B-D0A76CBC1268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3ACFD7A5-FEE9-4CBC-A03B-D0A76CBC1268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB88D73-9945-419C-8C9C-0F0DE3502786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB88D73-9945-419C-8C9C-0F0DE3502786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB88D73-9945-419C-8C9C-0F0DE3502786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB88D73-9945-419C-8C9C-0F0DE3502786}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
