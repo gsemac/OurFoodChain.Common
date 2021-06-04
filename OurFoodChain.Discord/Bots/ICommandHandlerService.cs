@@ -2,8 +2,7 @@
 
 namespace OurFoodChain.Discord.Bots {
 
-    public interface ICommandHandlerService :
-        ILogEventSource {
+    public interface ICommandHandlerService {
     }
 
 }

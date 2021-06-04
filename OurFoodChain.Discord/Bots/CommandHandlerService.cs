@@ -16,15 +16,14 @@ namespace OurFoodChain.Discord.Bots {
 
         // Public members
 
-        public event LogEventHandler Log;
-
-        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration) {
+        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, ILogger logger) {
 
             this.botConfiguration = botConfiguration;
             this.commandService = commandService;
             this.helpService = helpService;
             this.discordClient = discordClient;
             this.serviceProvider = serviceProvider;
+            this.logger = new NamedLogger(logger, GetType().Name);
 
             commandService.Log += (e) => OnLogAsync(BotUtilities.ConvertLogMessage(e));
             commandService.CommandExecuted += OnCommandExecutedAsync;
@@ -34,11 +33,9 @@ namespace OurFoodChain.Discord.Bots {
 
         // Protected members
 
-        protected LogEventHelper OnLog => new LogEventHelper(GetType().Name, Log);
-
         protected async Task OnLogAsync(ILogMessage message) {
 
-            OnLog.Log(message);
+            logger.Log(message);
 
             await Task.CompletedTask;
 
@@ -149,6 +146,7 @@ namespace OurFoodChain.Discord.Bots {
         private readonly IDocumentationService helpService;
         private readonly BaseSocketClient discordClient;
         private readonly IServiceProvider serviceProvider;
+        private readonly ILogger logger;
 
         private int GetCommmandArgumentsStartIndex(IMessage message) {
 

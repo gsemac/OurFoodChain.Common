@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
+using Gsemac.IO.Logging.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using OurFoodChain.Discord.Bots.Modules;
@@ -16,8 +17,6 @@ namespace OurFoodChain.Discord.Bots {
         IDiscordBot {
 
         // Public members
-
-        public event LogEventHandler Log;
 
         public async Task ConnectAsync() {
 
@@ -55,13 +54,14 @@ namespace OurFoodChain.Discord.Bots {
 
         // Protected members
 
-        protected LogEventHelper OnLog => new LogEventHelper(GetType().Name, Log);
         protected DiscordSocketClient Client { get; private set; }
         protected IDiscordBotOptions Configuration { get; }
+        protected ILogger Logger { get; }
 
-        protected DiscordBotBase(IDiscordBotOptions configuration) {
+        protected DiscordBotBase(IDiscordBotOptions configuration, ILogger logger) {
 
             Configuration = configuration;
+            Logger = new NamedLogger(logger, GetType().Name);
 
         }
 
@@ -69,7 +69,7 @@ namespace OurFoodChain.Discord.Bots {
 
             config.LogLevel = LogSeverity.Info;
 
-            OnLog.Info("Configuring client");
+            Logger.Info("Configuring client");
 
             // Required on Windows 7
 
@@ -81,12 +81,13 @@ namespace OurFoodChain.Discord.Bots {
         }
         protected virtual async Task ConfigureServicesAsync(IServiceCollection services) {
 
-            OnLog.Info("Configuring services");
+            Logger.Info("Configuring services");
 
             services.AddSingleton(Configuration)
                 .AddSingleton(Client)
                 .AddSingleton<BaseSocketClient>(Client)
-                .AddSingleton<CommandService>();
+                .AddSingleton<CommandService>()
+                .AddSingleton(Logger);
 
             services.TryAddSingleton<IInteractiveMessageServiceOptions, InteractiveMessageServiceOptions>();
             services.TryAddSingleton<IInteractiveMessageService, InteractiveCommandHandlerService>();
@@ -100,7 +101,7 @@ namespace OurFoodChain.Discord.Bots {
         }
         protected virtual async Task ConfigureCommandsAsync(CommandService commandService) {
 
-            OnLog.Info("Configuring commands");
+            Logger.Info("Configuring commands");
 
             await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
 
@@ -111,7 +112,7 @@ namespace OurFoodChain.Discord.Bots {
 
         protected virtual async Task OnLogAsync(ILogMessage message) {
 
-            OnLog.Log(message);
+            Logger.Log(message);
 
             await Task.CompletedTask;
 
@@ -119,7 +120,7 @@ namespace OurFoodChain.Discord.Bots {
         protected virtual async Task OnReadyAsync() {
 
             foreach (IGuild guild in Client.Guilds)
-                OnLog.Info($"Joined {guild.Name} ({guild.Id})");
+                Logger.Info($"Joined {guild.Name} ({guild.Id})");
 
             await Task.CompletedTask;
 

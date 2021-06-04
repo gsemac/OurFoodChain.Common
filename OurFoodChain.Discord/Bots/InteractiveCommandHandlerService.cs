@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Gsemac.IO.Logging;
 using OurFoodChain.Discord.Extensions;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,8 @@ namespace OurFoodChain.Discord.Bots {
 
         // Public members
 
-        public InteractiveCommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, IInteractiveMessageServiceOptions options) :
-            base(commandService, discordClient, helpService, serviceProvider, botConfiguration) {
+        public InteractiveCommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, IInteractiveMessageServiceOptions options, ILogger logger) :
+            base(commandService, discordClient, helpService, serviceProvider, botConfiguration, logger) {
 
             this.botConfiguration = botConfiguration;
             this.options = options;
