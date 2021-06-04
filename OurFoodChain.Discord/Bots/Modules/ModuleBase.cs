@@ -17,7 +17,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
         public IInteractiveMessageServiceOptions InteractiveMessageServiceOptions { get; set; }
         public IPaginatedMessageService PaginatedMessageService { get; set; }
 
-        public async Task<IMessage> GetNextMessageAsync(IInteractionOptions options = null) {
+        public async Task<IUserMessage> GetNextMessageAsync(IInteractionOptions options = null) {
 
             if (InteractiveMessageService is object)
                 return await InteractiveMessageService.GetNextMessageAsync(Context, options);
@@ -25,7 +25,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
             return null;
 
         }
-        public async Task<IMessage> GetReplyAsync(string message = "", bool isTTS = false, Embed embed = null, IInteractionOptions options = null) {
+        public async Task<IUserMessage> GetReplyAsync(string message = "", bool isTTS = false, Embed embed = null, IInteractionOptions options = null) {
 
             message ??= "";
             options ??= InteractionOptions.Default;
@@ -40,7 +40,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
             if (InteractiveMessageService is object) {
 
-                IMessage response = await InteractiveMessageService.GetNextMessageAsync(Context, options);
+                IUserMessage response = await InteractiveMessageService.GetNextMessageAsync(Context, options);
 
                 if (response is null)
                     await ReplyAsync(embed: BotUtilities.BuildInfoEmbed("The command was cancelled.").Build());
@@ -53,7 +53,7 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
         }
 
-        public async Task<IMessage> ReplyAsync(IPaginatedMessage paginatedMessage, IPaginationOptions options = null) {
+        public async Task<IUserMessage> ReplyAsync(IPaginatedMessage paginatedMessage, IPaginationOptions options = null) {
 
             return await PaginatedMessageService.SendPaginatedMessageAsync(Context, paginatedMessage, options);
 

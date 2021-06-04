@@ -6,7 +6,7 @@ namespace OurFoodChain.Discord.Bots {
 
     public interface IInteractiveMessageService {
 
-        Task<IMessage> GetNextMessageAsync(ICommandContext context, IInteractionOptions options = null);     
+        Task<IUserMessage> GetNextMessageAsync(ICommandContext context, IInteractionOptions options = null);     
 
     }
 

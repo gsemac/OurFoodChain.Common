@@ -5,7 +5,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace OurFoodChain.Discord.Bots {
@@ -24,7 +23,7 @@ namespace OurFoodChain.Discord.Bots {
 
         }
 
-        public async Task<IMessage> SendPaginatedMessageAsync(ICommandContext context, IPaginatedMessage message, IPaginationOptions options = null) {
+        public async Task<IUserMessage> SendPaginatedMessageAsync(ICommandContext context, IPaginatedMessage message, IPaginationOptions options = null) {
 
             options ??= PaginationOptions.Default;
 
@@ -62,11 +61,11 @@ namespace OurFoodChain.Discord.Bots {
         private class PaginatedMessageInfo {
 
             public ICommandContext Context { get; }
-            public IMessage Message { get; }
+            public IUserMessage Message { get; }
             public IPaginatedMessage PaginatedMessage { get; }
             public IPaginationOptions Options { get; }
 
-            public PaginatedMessageInfo(ICommandContext context, IMessage message, IPaginatedMessage paginatedMessage, IPaginationOptions options) {
+            public PaginatedMessageInfo(ICommandContext context, IUserMessage message, IPaginatedMessage paginatedMessage, IPaginationOptions options) {
 
                 this.Context = context;
                 this.Message = message;

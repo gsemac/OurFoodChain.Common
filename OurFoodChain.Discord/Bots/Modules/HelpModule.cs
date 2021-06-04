@@ -90,17 +90,12 @@ namespace OurFoodChain.Discord.Bots.Modules {
 
         }
 
-        //[Command("test", RunMode = RunMode.Async)]
-        //public async Task Test() {
+        [Command("test", RunMode = RunMode.Async)]
+        public async Task Test() {
 
-        //    IUserMessage message = await ReplyAsync("test");
+            IUserMessage message = await ReplyAsync(new PaginatedMessageBuilder().WithTitle("test").Build());
 
-        //    await message.AddReactionsAsync(new[] {
-        //        new Emoji("👍"),
-        //        new Emoji("👎"),
-        //    });
-
-        //}
+        }
 
         // Private members
 

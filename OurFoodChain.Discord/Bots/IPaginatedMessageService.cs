@@ -6,7 +6,7 @@ namespace OurFoodChain.Discord.Bots {
 
     public interface IPaginatedMessageService {
 
-        Task<IMessage> SendPaginatedMessageAsync(ICommandContext context, IPaginatedMessage message, IPaginationOptions options = null);
+        Task<IUserMessage> SendPaginatedMessageAsync(ICommandContext context, IPaginatedMessage message, IPaginationOptions options = null);
 
     }
 
