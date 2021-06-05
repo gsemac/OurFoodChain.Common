@@ -3,14 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OurFoodChain.Data.Dal {
 
-    public sealed class UnitOfWork<TDbContext> :
-        UnitOfWorkBase<TDbContext> where TDbContext : DbContext, IOurFoodChainDbContext {
+    public sealed class OfcUnitOfWork<TDbContext> :
+        UnitOfWorkBase<TDbContext> where TDbContext : DbContext, IOfcDbContext {
 
         // Public members
 
         public IWorldRepository Worlds { get; }
 
-        public UnitOfWork(TDbContext context) :
+        public OfcUnitOfWork(TDbContext context) :
             base(context) {
 
             Worlds = new WorldRepository<TDbContext>(context);

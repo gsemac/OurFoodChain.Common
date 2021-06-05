@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using OurFoodChain.Data.Models;
 
 namespace OurFoodChain.Data {
 
-    public class OurFoodChainIdentityDbContext :
-        IdentityDbContext<ApplicationUser>,
-        IOurFoodChainDbContext {
+    public class OfcDbContext :
+        DbContext,
+        IOfcDbContext {
 
         public DbSet<World> Worlds { get; set; }
         public DbSet<Creator> Creators { get; set; }
@@ -35,21 +34,13 @@ namespace OurFoodChain.Data {
         public DbSet<SpeciesField> SpeciesFields { get; set; }
         public DbSet<Era> Eras { get; set; }
 
-        public OurFoodChainIdentityDbContext(DbContextOptions<OurFoodChainIdentityDbContext> options) :
-            base(options) {
-        }
-        public OurFoodChainIdentityDbContext(DbContextOptions options) :
+        public OfcDbContext(DbContextOptions options) :
             base(options) {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
 
-            OurFoodChainDbContextUtilities.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasOne(e => e.Creator)
-                .WithOne()
-                .HasForeignKey<ApplicationUser>(e => e.CreatorId);
+            OfcDbContextUtilities.OnModelCreating(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
 

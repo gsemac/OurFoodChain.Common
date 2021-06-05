@@ -9,7 +9,7 @@ namespace OurFoodChain.Data.Dal {
 
     public class WorldRepository<TDbContext> :
         RepositoryBase<World, TDbContext>,
-        IWorldRepository where TDbContext : DbContext, IOurFoodChainDbContext {
+        IWorldRepository where TDbContext : DbContext, IOfcDbContext {
 
         // Public members
 
@@ -20,11 +20,6 @@ namespace OurFoodChain.Data.Dal {
         public async Task<World> GetWorldAsync(int id) {
 
             return await Context.Worlds.FindAsync(id);
-
-        }
-        public Task<World> GetWorldAsync(ulong serverId) {
-
-            return Task.FromResult(Context.Worlds.Where(world => world.DiscordServerId == serverId).FirstOrDefault());
 
         }
         public async Task<IEnumerable<World>> GetWorldsAsync() {

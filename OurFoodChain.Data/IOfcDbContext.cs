@@ -3,7 +3,7 @@ using OurFoodChain.Data.Models;
 
 namespace OurFoodChain.Data {
 
-    public interface IOurFoodChainDbContext {
+    public interface IOfcDbContext {
 
         DbSet<World> Worlds { get; set; }
 

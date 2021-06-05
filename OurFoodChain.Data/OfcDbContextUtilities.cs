@@ -5,7 +5,7 @@ using System;
 
 namespace OurFoodChain.Data {
 
-    internal static class OurFoodChainDbContextUtilities {
+    internal static class OfcDbContextUtilities {
 
         public static void OnModelCreating(ModelBuilder modelBuilder) {
 
