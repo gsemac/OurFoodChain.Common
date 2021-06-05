@@ -84,7 +84,7 @@ namespace Gsemac.Discord {
         }
         protected virtual async Task ConfigureServicesAsync(IServiceCollection services) {
 
-            Logger.Info("Configuring services");
+            Logger.Info("Adding services");
 
             services.AddSingleton(Options)
                 .AddSingleton(Client)
@@ -102,7 +102,18 @@ namespace Gsemac.Discord {
             await Task.CompletedTask;
 
         }
-        protected virtual async Task ConfigureCommandsAsync(CommandService commandService) {
+        protected virtual async Task ConfigureServicesAsync(IServiceProvider services) {
+
+            Logger.Info("Configuring services");
+
+            serviceProvider.GetRequiredService<ICommandHandlerService>();
+
+            await ConfigureCommandsAsync(serviceProvider.GetRequiredService<CommandService>(), serviceProvider);
+
+            await Task.CompletedTask;
+
+        }
+        protected virtual async Task ConfigureCommandsAsync(CommandService commandService, IServiceProvider serviceProvider) {
 
             Logger.Info("Configuring commands");
 
@@ -175,9 +186,7 @@ namespace Gsemac.Discord {
 
             serviceProvider = services.BuildServiceProvider();
 
-            serviceProvider.GetRequiredService<ICommandHandlerService>();
-
-            await ConfigureCommandsAsync(serviceProvider.GetRequiredService<CommandService>());
+            await ConfigureServicesAsync(serviceProvider);
 
             Client.Log += (message) => OnLogAsync(BotUtilities.ConvertLogMessage(message));
             Client.Ready += OnReadyAsync;
