@@ -1,6 +1,6 @@
 ﻿using OurFoodChain.Relationships;
 
-namespace OurFoodChain.Models {
+namespace OurFoodChain.Data.Models {
 
     public class SpeciesRelationship {
 

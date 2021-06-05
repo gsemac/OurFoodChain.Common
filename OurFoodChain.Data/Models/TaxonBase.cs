@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OurFoodChain.Models {
+namespace OurFoodChain.Data.Models {
 
     public abstract class TaxonBase<CommonNameT> {
 

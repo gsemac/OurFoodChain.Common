@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
     <AssemblyName>OurFoodChain.Data</AssemblyName>
-    <RootNamespace>OurFoodChain</RootNamespace>
+    <RootNamespace>OurFoodChain.Data</RootNamespace>
     <Authors>gsemac</Authors>
     <Version>0.0.3</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
@@ -22,11 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gsemac.Data\Gsemac.Data.csproj" />
     <ProjectReference Include="..\OurFoodChain.Core\OurFoodChain.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dal\" />
   </ItemGroup>
 
 </Project>

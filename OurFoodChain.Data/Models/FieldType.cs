@@ -1,4 +1,4 @@
-﻿namespace OurFoodChain.Models {
+﻿namespace OurFoodChain.Data.Models {
 
     public enum FieldType {
         Auto = 0,

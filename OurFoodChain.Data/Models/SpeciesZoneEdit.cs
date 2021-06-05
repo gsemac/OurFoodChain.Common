@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace OurFoodChain.Models {
+namespace OurFoodChain.Data.Models {
 
     [Keyless]
     public class SpeciesZoneEdit :

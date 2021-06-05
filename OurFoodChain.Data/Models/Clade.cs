@@ -1,6 +1,6 @@
 ﻿using OurFoodChain.Taxonomy;
 
-namespace OurFoodChain.Models {
+namespace OurFoodChain.Data.Models {
 
     public class Clade :
         TaxonBase<CladeCommonName> {

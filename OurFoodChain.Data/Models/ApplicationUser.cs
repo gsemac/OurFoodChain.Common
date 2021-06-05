@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace OurFoodChain.Models {
+namespace OurFoodChain.Data.Models {
 
     public class ApplicationUser :
         IdentityUser {

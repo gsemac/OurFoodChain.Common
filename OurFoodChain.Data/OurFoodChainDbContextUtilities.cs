@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OurFoodChain.Data.Extensions;
-using OurFoodChain.Models;
+using OurFoodChain.Data.Models;
 using System;
 
 namespace OurFoodChain.Data {

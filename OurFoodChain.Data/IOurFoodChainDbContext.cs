@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OurFoodChain.Models;
+using OurFoodChain.Data.Models;
 
 namespace OurFoodChain.Data {
 
