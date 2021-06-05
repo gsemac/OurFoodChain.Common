@@ -26,13 +26,13 @@ namespace Gsemac.Discord {
             if (Client is null)
                 await StartAsync();
 
-            string token = Configuration.Token;
+            string token = Options.Token;
 
             await Client.LoginAsync(TokenType.Bot, token);
 
             await Client.StartAsync();
 
-            await Client.SetGameAsync(Configuration.Playing);
+            await Client.SetGameAsync(Options.Playing);
 
         }
         public async Task DisconnectAsync() {
@@ -55,12 +55,15 @@ namespace Gsemac.Discord {
         // Protected members
 
         protected DiscordSocketClient Client { get; private set; }
-        protected IDiscordBotOptions Configuration { get; }
+        protected IDiscordBotOptions Options { get; }
         protected ILogger Logger { get; }
 
-        protected DiscordBotBase(IDiscordBotOptions configuration, ILogger logger) {
+        protected DiscordBotBase(IDiscordBotOptions options) :
+            this(options, new ConsoleLogger()) {
+        }
+        protected DiscordBotBase(IDiscordBotOptions options, ILogger logger) {
 
-            Configuration = configuration;
+            Options = options;
             Logger = new NamedLogger(logger, GetType().Name);
 
         }
@@ -73,7 +76,7 @@ namespace Gsemac.Discord {
 
             // Required on Windows 7
 
-            if (Configuration.UseWS4Net)
+            if (Options.UseWS4Net)
                 config.WebSocketProvider = WS4NetProvider.Instance;
 
             await Task.CompletedTask;
@@ -83,7 +86,7 @@ namespace Gsemac.Discord {
 
             Logger.Info("Configuring services");
 
-            services.AddSingleton(Configuration)
+            services.AddSingleton(Options)
                 .AddSingleton(Client)
                 .AddSingleton<BaseSocketClient>(Client)
                 .AddSingleton<CommandService>()

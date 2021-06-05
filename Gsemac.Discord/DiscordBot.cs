@@ -7,11 +7,11 @@ namespace Gsemac.Discord {
 
         // Public members
 
-        public DiscordBot(IDiscordBotOptions configuration) :
-           this(configuration, new ConsoleLogger()) {
+        public DiscordBot(IDiscordBotOptions options) :
+           base(options) {
         }
-        public DiscordBot(IDiscordBotOptions configuration, ILogger logger) :
-            base(configuration, logger) {
+        public DiscordBot(IDiscordBotOptions options, ILogger logger) :
+            base(options, logger) {
         }
 
     }
