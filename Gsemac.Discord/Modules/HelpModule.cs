@@ -90,13 +90,6 @@ namespace Gsemac.Discord.Modules {
 
         }
 
-        [Command("test", RunMode = RunMode.Async)]
-        public async Task Test() {
-
-            IUserMessage message = await ReplyAsync(new PaginatedMessageBuilder().WithTitle("test").Build());
-
-        }
-
         // Private members
 
         private const string DefaultCommandCategory = "general";
