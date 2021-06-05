@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Gsemac.Data.Dal {
 
@@ -28,7 +29,6 @@ namespace Gsemac.Data.Dal {
             return Context.Set<TEntity>().Where(predicate);
 
         }
-
         public void Add(TEntity entity) {
 
             Context.Set<TEntity>().Add(entity);
@@ -39,7 +39,6 @@ namespace Gsemac.Data.Dal {
             Context.Set<TEntity>().AddRange(entities);
 
         }
-
         public void Remove(TEntity entity) {
 
             Context.Set<TEntity>().Remove(entity);
@@ -48,6 +47,46 @@ namespace Gsemac.Data.Dal {
         public void RemoveRange(IEnumerable<TEntity> entities) {
 
             Context.Set<TEntity>().RemoveRange(entities);
+
+        }
+
+        public async Task<TEntity> GetAsync(int id) {
+
+            return await Context.Set<TEntity>().FindAsync(id);
+
+        }
+        public async Task<IEnumerable<TEntity>> GetAllAsync() {
+
+            return await Context.Set<TEntity>().ToListAsync();
+
+        }
+        public Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate) {
+
+            return Task.FromResult(Find(predicate));
+
+        }
+        public async Task AddAsync(TEntity entity) {
+
+            await Context.Set<TEntity>().AddAsync(entity);
+
+        }
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities) {
+
+            await Context.Set<TEntity>().AddRangeAsync(entities);
+
+        }
+        public Task RemoveAsync(TEntity entity) {
+
+            Remove(entity);
+
+            return Task.CompletedTask;
+
+        }
+        public Task RemoveRangeAsync(IEnumerable<TEntity> entities) {
+
+            RemoveRange(entities);
+
+            return Task.CompletedTask;
 
         }
 
