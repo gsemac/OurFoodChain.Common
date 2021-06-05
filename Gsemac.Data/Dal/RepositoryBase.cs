@@ -29,9 +29,9 @@ namespace Gsemac.Data.Dal {
             return Context.Set<TEntity>().Where(predicate);
 
         }
-        public void Add(TEntity entity) {
+        public TEntity Add(TEntity entity) {
 
-            Context.Set<TEntity>().Add(entity);
+            return Context.Set<TEntity>().Add(entity).Entity;
 
         }
         public void AddRange(IEnumerable<TEntity> entities) {
@@ -65,9 +65,9 @@ namespace Gsemac.Data.Dal {
             return Task.FromResult(Find(predicate));
 
         }
-        public async Task AddAsync(TEntity entity) {
+        public async Task<TEntity> AddAsync(TEntity entity) {
 
-            await Context.Set<TEntity>().AddAsync(entity);
+            return (await Context.Set<TEntity>().AddAsync(entity)).Entity;
 
         }
         public async Task AddRangeAsync(IEnumerable<TEntity> entities) {
