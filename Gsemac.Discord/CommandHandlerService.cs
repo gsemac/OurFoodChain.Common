@@ -3,6 +3,7 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Gsemac.IO.Logging;
 using Gsemac.Text;
+using Microsoft.Extensions.DependencyInjection;
 using OurFoodChain.Discord.Extensions;
 using System;
 using System.Linq;
@@ -57,10 +58,14 @@ namespace Gsemac.Discord {
 
             int argumentsIndex = GetCommmandArgumentsStartIndex(userMessage);
             ICommandContext context = new CommandContext(discordClient, userMessage);
+            
+            using(var scope = serviceProvider.CreateScope()) {
 
-            IResult result = await commandService.ExecuteAsync(context, argumentsIndex, serviceProvider);
+                IResult result = await commandService.ExecuteAsync(context, argumentsIndex, scope.ServiceProvider);
 
-            return result;
+                return result;
+
+            }
 
         }
         protected virtual async Task OnCommandExecutedAsync(Optional<CommandInfo> command, ICommandContext context, IResult result) {
