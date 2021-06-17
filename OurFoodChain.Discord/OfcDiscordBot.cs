@@ -30,15 +30,14 @@ namespace OurFoodChain.Discord {
 
         protected override Task ConfigureServicesAsync(IServiceCollection services) {
 
-            services.AddDbContext<OfcDbContext>(builder => builder.UseSqlite($"Data Source={options.DatabaseFilePath};"))
-                .AddScoped<OfcUnitOfWork<OfcDbContext>>();
+            services.AddDbContext<IOfcDbContext, OfcDbContext>(builder => builder.UseSqlite($"Data Source={options.DatabaseFilePath};"));
 
             return base.ConfigureServicesAsync(services);
 
         }
         protected override Task ConfigureServicesAsync(IServiceProvider services) {
 
-            services.GetRequiredService<OfcDbContext>().Database.EnsureCreated();
+            services.GetRequiredService<IOfcDbContext>().Database.EnsureCreated();
 
             return base.ConfigureServicesAsync(services);
 
