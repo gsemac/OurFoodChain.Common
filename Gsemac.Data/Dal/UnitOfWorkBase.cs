@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 
 namespace Gsemac.Data.Dal {
 
-    public abstract class UnitOfWorkBase<TDbContext> :
-        IUnitOfWork
-        where TDbContext : DbContext {
+    public abstract class UnitOfWorkBase :
+        IUnitOfWork {
 
         // Public members
 
@@ -25,11 +23,14 @@ namespace Gsemac.Data.Dal {
 
         // Protected members
 
-        protected TDbContext Context { get; }
+        protected IDbContext Context { get; }
 
-        protected UnitOfWorkBase(TDbContext context) {
+        protected UnitOfWorkBase(IDbContext dbContext) {
 
-            Context = context;
+            if (dbContext is null)
+                throw new ArgumentNullException(nameof(dbContext));
+
+            Context = dbContext;
 
         }
 

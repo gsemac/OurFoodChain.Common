@@ -10,7 +10,7 @@ namespace Gsemac.Data.Dal {
     public abstract class RepositoryBase<TEntity, TDbContext> :
         IRepository<TEntity>
         where TEntity : class
-        where TDbContext : DbContext {
+        where TDbContext : IDbContext {
 
         // Public members
 
@@ -94,9 +94,12 @@ namespace Gsemac.Data.Dal {
 
         protected TDbContext Context { get; }
 
-        protected RepositoryBase(TDbContext context) {
+        protected RepositoryBase(TDbContext dbContext) {
 
-            Context = context;
+            if (dbContext is null)
+                throw new ArgumentNullException(nameof(dbContext));
+
+            Context = dbContext;
 
         }
 
