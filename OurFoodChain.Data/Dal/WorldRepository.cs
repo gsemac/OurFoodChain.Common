@@ -2,19 +2,18 @@
 using Microsoft.EntityFrameworkCore;
 using OurFoodChain.Data.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace OurFoodChain.Data.Dal {
 
-    public class WorldRepository<TDbContext> :
-        RepositoryBase<World, TDbContext>,
-        IWorldRepository where TDbContext : DbContext, IOfcDbContext {
+    public class WorldRepository :
+        RepositoryBase<World, IOfcDbContext>,
+        IWorldRepository {
 
         // Public members
 
-        public WorldRepository(TDbContext context) :
-            base(context) {
+        public WorldRepository(IOfcDbContext dbContext) :
+            base(dbContext) {
         }
 
         public async Task<World> GetWorldAsync(int id) {

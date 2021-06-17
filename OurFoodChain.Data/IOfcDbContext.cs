@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Gsemac.Data;
+using Microsoft.EntityFrameworkCore;
 using OurFoodChain.Data.Models;
 
 namespace OurFoodChain.Data {
 
-    public interface IOfcDbContext {
+    public interface IOfcDbContext :
+        IDbContext {
 
         DbSet<World> Worlds { get; set; }
 

@@ -1,19 +1,19 @@
 ﻿using Gsemac.Data.Dal;
-using Microsoft.EntityFrameworkCore;
 
 namespace OurFoodChain.Data.Dal {
 
-    public sealed class OfcUnitOfWork<TDbContext> :
-        UnitOfWorkBase<TDbContext> where TDbContext : DbContext, IOfcDbContext {
+    public sealed class OfcUnitOfWork :
+        UnitOfWorkBase,
+        IOfcUnitOfWork {
 
         // Public members
 
         public IWorldRepository Worlds { get; }
 
-        public OfcUnitOfWork(TDbContext context) :
+        public OfcUnitOfWork(IOfcDbContext context) :
             base(context) {
 
-            Worlds = new WorldRepository<TDbContext>(context);
+            Worlds = new WorldRepository(context);
 
         }
 
