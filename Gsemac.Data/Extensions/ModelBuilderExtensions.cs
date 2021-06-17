@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Linq;
 
-namespace OurFoodChain.Data.Extensions {
+namespace Gsemac.Data.Extensions {
 
     public static class ModelBuilderExtensions {
 

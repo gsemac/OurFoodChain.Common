@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OurFoodChain.Data.Extensions;
+﻿using Gsemac.Data.Extensions;
+using Microsoft.EntityFrameworkCore;
 using OurFoodChain.Data.Models;
 using System;
 
