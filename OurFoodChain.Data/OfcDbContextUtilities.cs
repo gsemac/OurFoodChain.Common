@@ -14,7 +14,7 @@ namespace OurFoodChain.Data {
             // https://docs.microsoft.com/en-us/ef/core/providers/sqlite/limitations
 
             modelBuilder.UseValueConverterForType<DateTimeOffset>(new UnixTimestampDateTimeOffsetValueConverter());
-            modelBuilder.UseValueConverterForType<ulong>(new UnsignedToSignedUInt64ValueConverter());
+            modelBuilder.UseValueConverterForType<ulong>(new SignedUInt64ValueConverter());
 
             // Creators
 
