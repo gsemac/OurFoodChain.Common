@@ -62,7 +62,7 @@ namespace OurFoodChain.Taxonomy {
                 .Where(part => !string.IsNullOrWhiteSpace(part))
                 .ToArray();
 
-            if (parts.Count() != 2)
+            if (parts.Length != 2)
                 return false;
 
             result = new BinomialName(parts[0], parts[1]);
