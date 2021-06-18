@@ -2,9 +2,9 @@
 using System;
 using System.Linq.Expressions;
 
-namespace OurFoodChain.Data {
+namespace Gsemac.Data.ValueConverters {
 
-    internal class UnsignedToSignedUInt64ValueConverter :
+    public class UnsignedToSignedUInt64ValueConverter :
         ValueConverter<ulong, long> {
 
         // Public members

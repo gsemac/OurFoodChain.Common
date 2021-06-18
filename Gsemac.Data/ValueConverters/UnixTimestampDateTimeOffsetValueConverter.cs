@@ -2,9 +2,9 @@
 using System;
 using System.Linq.Expressions;
 
-namespace OurFoodChain.Data {
+namespace Gsemac.Data.ValueConverters {
 
-    internal class UnixTimestampDateTimeOffsetValueConverter :
+    public class UnixTimestampDateTimeOffsetValueConverter :
         ValueConverter<DateTimeOffset, long> {
 
         // Public members
