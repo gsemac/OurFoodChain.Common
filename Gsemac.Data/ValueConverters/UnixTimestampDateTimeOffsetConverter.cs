@@ -4,12 +4,12 @@ using System.Linq.Expressions;
 
 namespace Gsemac.Data.ValueConverters {
 
-    public class UnixTimestampDateTimeOffsetValueConverter :
+    public class UnixTimestampDateTimeOffsetConverter :
         ValueConverter<DateTimeOffset, long> {
 
         // Public members
 
-        public UnixTimestampDateTimeOffsetValueConverter(ConverterMappingHints mappingHints = null) :
+        public UnixTimestampDateTimeOffsetConverter(ConverterMappingHints mappingHints = null) :
             base(ConvertToProviderArgument, ConvertFromProviderArgument, mappingHints) {
         }
 

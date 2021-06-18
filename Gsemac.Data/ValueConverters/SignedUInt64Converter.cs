@@ -4,12 +4,12 @@ using System.Linq.Expressions;
 
 namespace Gsemac.Data.ValueConverters {
 
-    public class SignedUInt64ValueConverter :
+    public class SignedUInt64Converter :
         ValueConverter<ulong, long> {
 
         // Public members
 
-        public SignedUInt64ValueConverter(ConverterMappingHints mappingHints = null) :
+        public SignedUInt64Converter(ConverterMappingHints mappingHints = null) :
             base(ConvertToProviderArgument, ConvertFromProviderArgument, mappingHints) {
         }
 

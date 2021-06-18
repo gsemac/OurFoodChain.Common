@@ -1,5 +1,6 @@
 ﻿using Gsemac.Data.Extensions;
 using Gsemac.Data.ValueConverters;
+using Gsemac.Text;
 using Microsoft.EntityFrameworkCore;
 using OurFoodChain.Data.Models;
 using System;
@@ -13,8 +14,8 @@ namespace OurFoodChain.Data {
             // Custom value converters are used to work with types not supported by SQLite.
             // https://docs.microsoft.com/en-us/ef/core/providers/sqlite/limitations
 
-            modelBuilder.UseValueConverterForType<DateTimeOffset>(new UnixTimestampDateTimeOffsetValueConverter());
-            modelBuilder.UseValueConverterForType<ulong>(new SignedUInt64ValueConverter());
+            modelBuilder.UseValueConverterForType<DateTimeOffset>(new UnixTimestampDateTimeOffsetConverter());
+            modelBuilder.UseValueConverterForType<ulong>(new SignedUInt64Converter());
 
             // Creators
 
@@ -47,21 +48,33 @@ namespace OurFoodChain.Data {
                 .HasOne(e => e.DisplayedCommonName)
                 .WithOne(e => e.Clade)
                 .HasForeignKey<Clade>(e => e.DisplayedCommonNameId);
+
             modelBuilder.Entity<Clade>()
                 .HasIndex(e => new { e.Rank, e.Name })
                 .IsUnique();
+
+            modelBuilder.Entity<Clade>()
+                .Property(e => e.Name)
+                .HasConversion(new CaseConversionStringConverter(StringCasing.Lower));
 
             modelBuilder.Entity<CladeCommonName>()
                 .HasIndex(e => new { e.CladeId, e.CommonName })
                 .IsUnique();
 
+            // Species
+
             modelBuilder.Entity<Species>()
                 .HasOne(e => e.DisplayedCommonName)
                 .WithOne(e => e.Species)
                 .HasForeignKey<Species>(e => e.DisplayedCommonNameId);
+
             modelBuilder.Entity<Species>()
                 .HasIndex(e => new { e.GenusId, e.Name })
                 .IsUnique();
+
+            modelBuilder.Entity<Species>()
+                .Property(e => e.Name)
+                .HasConversion(new CaseConversionStringConverter(StringCasing.Lower));
 
             modelBuilder.Entity<SpeciesCommonName>()
                 .HasIndex(e => new { e.SpeciesId, e.CommonName })
