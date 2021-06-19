@@ -14,7 +14,11 @@ namespace Gsemac.Discord {
 
         internal static ILogMessage ConvertLogMessage(global::Discord.LogMessage discordLogMessage) {
 
-            return new IO.Logging.LogMessage(ConvertLogLevel(discordLogMessage.Severity), discordLogMessage.Source, discordLogMessage.Message);
+            string message = discordLogMessage.Message is null ?
+                discordLogMessage.Exception.ToString() :
+                discordLogMessage.Message;
+
+            return new IO.Logging.LogMessage(ConvertLogLevel(discordLogMessage.Severity), discordLogMessage.Source, message);
 
         }
 
