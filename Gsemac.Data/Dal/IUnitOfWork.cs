@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Gsemac.Data.Dal {
 
@@ -6,6 +7,7 @@ namespace Gsemac.Data.Dal {
         IDisposable {
 
         int SaveChanges();
+        Task<int> SaveChangesAsync();
 
     }
 

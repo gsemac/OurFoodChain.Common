@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Gsemac.Data.Dal {
 
@@ -10,6 +11,11 @@ namespace Gsemac.Data.Dal {
         public int SaveChanges() {
 
             return Context.SaveChanges();
+
+        }
+        public Task<int> SaveChangesAsync() {
+
+            return Context.SaveChangesAsync();
 
         }
 
