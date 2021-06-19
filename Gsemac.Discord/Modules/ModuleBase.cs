@@ -58,6 +58,38 @@ namespace Gsemac.Discord.Modules {
             return await PaginatedMessageService.SendPaginatedMessageAsync(Context, paginatedMessage, options);
 
         }
+        public async Task<IUserMessage> ReplyInfoAsync(string message) {
+
+            return await ReplyAsync(embed: new EmbedBuilder()
+                .WithDescription(message)
+                .WithColor(Color.LightGrey)
+                .Build());
+
+        }
+        public async Task<IUserMessage> ReplyWarningAsync(string message) {
+
+            return await ReplyAsync(embed: new EmbedBuilder()
+                .WithDescription($"⚠️ {message}")
+                .WithColor(Color.Orange)
+                .Build());
+
+        }
+        public async Task<IUserMessage> ReplyErrorAsync(string message) {
+
+            return await ReplyAsync(embed: new EmbedBuilder()
+                .WithDescription($"❌ {message}")
+                .WithColor(Color.Red)
+                .Build());
+
+        }
+        public async Task<IUserMessage> ReplySuccessAsync(string message) {
+
+            return await ReplyAsync(embed: new EmbedBuilder()
+                .WithDescription($"✅ {message}")
+                .WithColor(Color.Green)
+                .Build());
+
+        }
 
     }
 
