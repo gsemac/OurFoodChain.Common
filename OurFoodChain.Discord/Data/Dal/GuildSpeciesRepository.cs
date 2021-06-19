@@ -3,7 +3,6 @@ using OurFoodChain.Data;
 using OurFoodChain.Data.Dal;
 using OurFoodChain.Data.Extensions;
 using OurFoodChain.Data.Models;
-using OurFoodChain.Discord.Data.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
