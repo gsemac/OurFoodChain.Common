@@ -2,7 +2,6 @@
 using Discord.Commands;
 using OurFoodChain.Data;
 using OurFoodChain.Data.Models;
-using OurFoodChain.Discord.Extensions;
 using System.Threading.Tasks;
 
 namespace OurFoodChain.Discord.Modules {
