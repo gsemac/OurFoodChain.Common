@@ -21,6 +21,7 @@ namespace OurFoodChain.Data {
 
             modelBuilder.Entity<CreatorWorldPermissions>()
                 .HasKey(e => new { e.WorldId, e.CreatorId });
+
             modelBuilder.Entity<CreatorFavorite>()
                 .HasKey(e => new { e.CreatorId, e.SpeciesId });
 
@@ -29,6 +30,7 @@ namespace OurFoodChain.Data {
             modelBuilder.Entity<Picture>()
                 .HasIndex(e => e.Url)
                 .IsUnique();
+
             modelBuilder.Entity<GalleryPicture>()
                 .HasKey(e => new { e.GalleryId, e.PictureId });
 
@@ -50,7 +52,7 @@ namespace OurFoodChain.Data {
                 .HasForeignKey<Clade>(e => e.DisplayedCommonNameId);
 
             modelBuilder.Entity<Clade>()
-                .HasIndex(e => new { e.Rank, e.Name })
+                .HasIndex(e => new { e.WorldId, e.Rank, e.Name })
                 .IsUnique();
 
             modelBuilder.Entity<Clade>()
@@ -69,7 +71,7 @@ namespace OurFoodChain.Data {
                 .HasForeignKey<Species>(e => e.DisplayedCommonNameId);
 
             modelBuilder.Entity<Species>()
-                .HasIndex(e => new { e.GenusId, e.Name })
+                .HasIndex(e => new { e.WorldId, e.GenusId, e.Name })
                 .IsUnique();
 
             modelBuilder.Entity<Species>()
