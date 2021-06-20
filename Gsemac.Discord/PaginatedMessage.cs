@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Gsemac.Discord {
@@ -19,15 +18,17 @@ namespace Gsemac.Discord {
             set => SetChapterIndex(value);
         }
 
-        public PaginatedMessage(IEnumerable<IPaginatedMessagePage> pages) {
-
-            this.pages = pages;
-
-        }
-
         public IPaginatedMessagePage GetCurrentPage() {
 
             return pages.Skip(PageIndex).FirstOrDefault();
+
+        }
+
+        // Internal members
+
+        internal PaginatedMessage(IEnumerable<IPaginatedMessagePage> pages) {
+
+            this.pages = pages;
 
         }
 
