@@ -37,7 +37,7 @@ namespace Gsemac.Discord {
 
             IUserMessage sentMessage = await context.Channel.SendMessageAsync(currentPage.Content, isTTS: false, embed: currentPage.Embed);
 
-            if (message.PageCount > 0) {
+            if (message.PageCount > 1) {
 
                 IEnumerable<IEmote> emotes = new[] {
                     options.PreviousPageEmote,
