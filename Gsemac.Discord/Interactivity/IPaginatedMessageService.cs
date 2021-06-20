@@ -2,7 +2,7 @@
 using Discord.Commands;
 using System.Threading.Tasks;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public interface IPaginatedMessageService {
 

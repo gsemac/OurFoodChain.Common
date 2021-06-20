@@ -1,4 +1,4 @@
-﻿namespace Gsemac.Discord {
+﻿namespace Gsemac.Discord.Interactivity {
 
     public interface IPaginatedMessageServiceOptions {
 

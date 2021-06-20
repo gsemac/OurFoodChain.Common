@@ -4,7 +4,7 @@ using OurFoodChain;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public class PaginatedMessageBuilder :
         IPaginatedMessageBuilder {

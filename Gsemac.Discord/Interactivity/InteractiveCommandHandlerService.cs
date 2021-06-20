@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Gsemac.Discord.Documentation;
 using Gsemac.IO.Logging;
 using OurFoodChain.Discord.Extensions;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public class InteractiveCommandHandlerService :
         CommandHandlerService,
@@ -17,7 +18,7 @@ namespace Gsemac.Discord {
 
         // Public members
 
-        public InteractiveCommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, IInteractiveMessageServiceOptions options, ILogger logger) :
+        public InteractiveCommandHandlerService(CommandService commandService, BaseSocketClient discordClient, ICommandMetadataService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, IInteractiveMessageServiceOptions options, ILogger logger) :
             base(commandService, discordClient, helpService, serviceProvider, botConfiguration, logger) {
 
             this.botConfiguration = botConfiguration;

@@ -2,6 +2,8 @@
 using Discord.Commands;
 using Discord.Net.Providers.WS4Net;
 using Discord.WebSocket;
+using Gsemac.Discord.Documentation;
+using Gsemac.Discord.Interactivity;
 using Gsemac.Discord.Modules;
 using Gsemac.IO.Logging;
 using Gsemac.IO.Logging.Extensions;
@@ -95,8 +97,8 @@ namespace Gsemac.Discord {
             services.TryAddSingleton<IInteractiveMessageServiceOptions, InteractiveMessageServiceOptions>();
             services.TryAddSingleton<IInteractiveMessageService, InteractiveCommandHandlerService>();
             services.TryAddSingleton<ICommandHandlerService>(provider => provider.GetRequiredService<IInteractiveMessageService>() as InteractiveCommandHandlerService);
-            services.TryAddSingleton<IDocumentationServiceOptions, DocumentationServiceOptions>();
-            services.TryAddSingleton<IDocumentationService, DocumentationService>();
+            services.TryAddSingleton<ICommandMetadataServiceOptions, CommandMetadataServiceOptions>();
+            services.TryAddSingleton<ICommandMetadataService, CommandMetadataService>();
             services.TryAddSingleton<IPaginatedMessageService, PaginatedMessageService>();
 
             await Task.CompletedTask;
@@ -119,7 +121,7 @@ namespace Gsemac.Discord {
 
             await commandService.AddModulesAsync(Assembly.GetEntryAssembly(), serviceProvider);
 
-            if (serviceProvider.GetService<IDocumentationService>() is object)
+            if (serviceProvider.GetService<ICommandMetadataService>() is object)
                 await commandService.AddModuleAsync<HelpModule>(serviceProvider);
 
         }

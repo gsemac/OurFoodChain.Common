@@ -1,5 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
+using Gsemac.Collections.Extensions;
+using Gsemac.Discord.Documentation;
 using Gsemac.Reflection;
 using Gsemac.Text.Extensions;
 using OurFoodChain.Discord.Extensions;
@@ -16,77 +18,117 @@ namespace Gsemac.Discord.Modules {
         // Public members
 
         [Command("help"), Alias("h")]
-        public async Task Help([Remainder] string groupOrCommandName = "") {
+        public async Task Help([Remainder] string commandName = "") {
 
-            IEnumerable<CommandInfo> commands = CommandService.Commands.Where(command => command.CheckPreconditionsAsync(Context).Result.IsSuccess);
+            // Get matching commands and sort them into their respective categories.
 
-            groupOrCommandName = groupOrCommandName?.Trim().ToLowerInvariant();
+            var commandGroups = (await DocumentationService.GetMetadataAsync(commandName, Context))
+                .DistinctBy(metadata => metadata.FullName.ToLowerInvariant())
+                .GroupBy(metadata => metadata.Category)
+                .OrderBy(group => group.Key);
 
-            if (!string.IsNullOrWhiteSpace(groupOrCommandName)) {
+            if (commandGroups.Any()) {
 
-                // The user has either provided the name of a command group, or the name of an individual command.
+                EmbedBuilder embedBuilder = new EmbedBuilder()
+                    .WithTitle("Commands")
+                    .WithFooter(GetHelpEmbedFooter());
 
-                commands = commands.Where(command => command.Aliases.Any(alias => alias.Equals(groupOrCommandName, StringComparison.OrdinalIgnoreCase)));
+                var firstGroup = commandGroups.First();
+                var firstCommand = firstGroup.First();
 
-            }
+                string distinctGroup = commandGroups.Count() == 1 && firstGroup.Count() > 1 ?
+                    GetDistinctCommandGroup(firstGroup) :
+                    string.Empty;
 
-            // Pair each command with its help info and sort them according to their category.
+                if ((commandGroups.Count() == 1 && firstGroup.Count() == 1) || !string.IsNullOrWhiteSpace(distinctGroup)) {
 
-            IEnumerable<ICommandDocumentation> commandsInfo = commands.Select(command => DocumentationService.GetCommandDocumentationAsync(command).Result);
+                    // We have a single, specific command, or we have a distinct group of commands.
 
-            var commandsByCategory = commands.Zip(commandsInfo).
-                GroupBy(pair => string.IsNullOrWhiteSpace(pair.Second.Category) ? DefaultCommandCategory : pair.Second.Category).
-                OrderBy(group => group.Key);
+                    if (!string.IsNullOrWhiteSpace(distinctGroup))
+                        firstCommand = firstGroup.Where(metadata => string.IsNullOrWhiteSpace(metadata.Group)).FirstOrDefault();
 
-            // Create a placeholder embed for the case where no commands were found.
+                    if (firstCommand is object) {
 
-            Embed helpEmbed = BotUtilities.BuildErrorEmbed($"{groupOrCommandName.ToCode()} is not recognized as a command or command group.").Build();
+                        if (!string.IsNullOrWhiteSpace(firstCommand.Summary))
+                            embedBuilder.AddField("Summary", firstCommand.Summary);
 
-            if (commands.Any()) {
+                        if (firstCommand.Aliases.Any())
+                            embedBuilder.AddField("Aliases", string.Join(", ", firstCommand.Aliases));
 
-                if (commands.Count() > 1 || string.IsNullOrWhiteSpace(groupOrCommandName)) {
-
-                    EmbedBuilder embedBuilder = new EmbedBuilder()
-                        .WithTitle("Commands")
-                        .WithDescription($"To learn more about a command, use `{Config.Prefix}help <command>` (e.g. `{Config.Prefix}help {commands.First().Name}`).")
-                        .WithFooter(GetHelpEmbedFooter());
-
-                    foreach (var commandGroup in commandsByCategory) {
-
-                        string fieldTitle = commandGroup.Key.ToProper();
-                        string fieldValue = string.Join("  ", commandGroup
-                            .Select(pair => pair.Second.Name.ToLowerInvariant().ToCode())
-                            .OrderBy(name => name));
-
-                        embedBuilder.AddField(fieldTitle, fieldValue);
+                        if (firstCommand.Examples.Any())
+                            embedBuilder.AddField("Examples", string.Join(Environment.NewLine, firstCommand.Examples));
 
                     }
 
-                    helpEmbed = embedBuilder.Build();
+                    if (string.IsNullOrWhiteSpace(distinctGroup)) {
+
+                        // We have a single command (e.g. not a group).
+
+                        embedBuilder.WithTitle($"Command: {firstCommand.FullName.ToLowerInvariant()}");
+
+                        if (!embedBuilder.Fields.Any())
+                            embedBuilder.WithDescription("No documentation is available for this command.");
+
+                    }
+                    else {
+
+                        // We have a group or a command that supports verbs.
+
+                        embedBuilder.WithTitle($"Command: {distinctGroup}");
+
+                        // Select an example command that showcases the use of a verb (rather than the default command for the group).
+
+                        ICommandMetadata exampleCommand = firstGroup.Where(metadata => !string.IsNullOrWhiteSpace(metadata.Group))
+                            .First();
+
+                        embedBuilder.WithDescription($"This command uses verbs, or subcommands.\nTo learn more, use `{Config.Prefix}help <command> <verb>` (e.g. `{Config.Prefix}help {exampleCommand.FullName}`).");
+
+                        string fieldValue = string.Join("  ", firstGroup.Select(meta => meta.Name.ToCode())
+                            .OrderBy(name => name));
+
+                        embedBuilder.AddField("Verbs", fieldValue);
+
+                    }
 
                 }
                 else {
 
-                    EmbedBuilder embedBuilder = new EmbedBuilder()
-                        .WithTitle($"Command: {commands.First().Name.ToLowerInvariant()}")
-                        .WithFooter(GetHelpEmbedFooter());
+                    // If we've got multiple categories of commands, list them all according to their category.
+                    // Groups/commands with subcommands will be listed by their group name only.
 
-                    if (!string.IsNullOrWhiteSpace(commandsInfo.First().Summary))
-                        embedBuilder.AddField("Summary", commandsInfo.First().Summary);
+                    foreach (var commandGroup in commandGroups) {
 
-                    if (commandsInfo.First().Examples.Any())
-                        embedBuilder.AddField("Examples", string.Join(Environment.NewLine, commandsInfo.First().Examples));
+                        IEnumerable<string> commandsStrings = commandGroup.Select(meta => meta.FullName.ToLowerInvariant().Split(' ').First())
+                            .OrderBy(name => name)
+                            .Distinct(StringComparer.OrdinalIgnoreCase);
 
-                    if (!embedBuilder.Fields.Any())
-                        embedBuilder.WithDescription("No documentation is available for this command.");
+                        embedBuilder.WithDescription($"To learn more about a command, use `{Config.Prefix}help <command>` (e.g. `{Config.Prefix}help {commandsStrings.First()}`).");
 
-                    helpEmbed = embedBuilder.Build();
+                        string fieldTitle = commandGroup.Key;
+
+                        if (string.IsNullOrWhiteSpace(fieldTitle))
+                            fieldTitle = DefaultCommandCategory;
+                        string fieldValue = string.Join("  ", commandsStrings.Select(str => str.ToCode()));
+
+                        embedBuilder.AddField(fieldTitle.ToProper(), fieldValue);
+
+                    }
 
                 }
 
-            }
+                await ReplyAsync(embed: embedBuilder.Build());
 
-            await ReplyAsync(string.Empty, false, helpEmbed);
+            }
+            else if (string.IsNullOrWhiteSpace(commandName)) {
+
+                await ReplyInfoAsync($"No commands are available.");
+
+            }
+            else {
+
+                await ReplyErrorAsync($"{commandName.ToCode()} is not recognized as a command or command group.");
+
+            }
 
         }
 
@@ -94,6 +136,26 @@ namespace Gsemac.Discord.Modules {
 
         private const string DefaultCommandCategory = "general";
 
+        private static string GetDistinctCommandGroup(IEnumerable<ICommandMetadata> commandMetadata) {
+
+            // All of the commands are of one group if they are all the same group, or there is a SINGLE outlier where its name is the group name.
+
+            IEnumerable<string> groupNames = commandMetadata.Select(metadata => metadata.Group)
+                .Where(group => !string.IsNullOrWhiteSpace(group))
+                .Distinct(StringComparer.OrdinalIgnoreCase);
+
+            if (groupNames.Count() != 1)
+                return string.Empty;
+
+            string groupName = groupNames.First();
+
+            bool hasSingleGroup = commandMetadata.All(metadata => metadata.Group.Equals(groupName, StringComparison.OrdinalIgnoreCase) || metadata.FullName.Equals(groupName, StringComparison.OrdinalIgnoreCase));
+
+            return hasSingleGroup ?
+                groupName :
+                string.Empty;
+
+        }
         private static string GetHelpEmbedFooter() {
 
             return $"{AssemblyInfo.EntryAssembly.ProductName} v{AssemblyInfo.EntryAssembly.ProductVersion}";

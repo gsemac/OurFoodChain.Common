@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public class PaginatedMessageService :
         IPaginatedMessageService {

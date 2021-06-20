@@ -1,6 +1,6 @@
 ﻿using Discord;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public interface IPaginatedMessagePage {
 

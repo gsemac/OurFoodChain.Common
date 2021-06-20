@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public class InteractiveMessageOptions :
         IInteractiveMessageOptions {

@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Gsemac.Discord.Documentation;
 using Gsemac.IO.Logging;
 using Gsemac.Text;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ namespace Gsemac.Discord {
 
         // Public members
 
-        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, IDocumentationService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, ILogger logger) {
+        public CommandHandlerService(CommandService commandService, BaseSocketClient discordClient, ICommandMetadataService helpService, IServiceProvider serviceProvider, IDiscordBotOptions botConfiguration, ILogger logger) {
 
             this.botConfiguration = botConfiguration;
             this.commandService = commandService;
@@ -58,8 +59,8 @@ namespace Gsemac.Discord {
 
             int argumentsIndex = GetCommmandArgumentsStartIndex(userMessage);
             ICommandContext context = new CommandContext(discordClient, userMessage);
-            
-            using(var scope = serviceProvider.CreateScope()) {
+
+            using (var scope = serviceProvider.CreateScope()) {
 
                 IResult result = await commandService.ExecuteAsync(context, argumentsIndex, scope.ServiceProvider);
 
@@ -85,7 +86,7 @@ namespace Gsemac.Discord {
 
                 // If help documentation exists for this command, display it.
 
-                ICommandDocumentation commandHelpInfo = await helpService.GetCommandInfoAsync(commandName);
+                ICommandMetadata commandHelpInfo = (await helpService.GetMetadataAsync(commandName, context)).FirstOrDefault();
 
                 if (commandHelpInfo != null) {
 
@@ -115,9 +116,9 @@ namespace Gsemac.Discord {
                         .OrderBy(name => StringUtilities.ComputeLevenshteinDistance(name, commandName))
                         .FirstOrDefault();
 
-                ICommandDocumentation commandHelpInfo = await helpService.GetCommandInfoAsync(suggestedCommand);
+                ICommandMetadata commandHelpInfo = (await helpService.GetMetadataAsync(suggestedCommand, context)).FirstOrDefault();
 
-                await BotUtilities.ReplyErrorAsync(context.Channel, $"Unknown command. Did you mean {commandHelpInfo.Name.ToBold()}?");
+                await BotUtilities.ReplyErrorAsync(context.Channel, $"Unknown command. Did you mean {commandHelpInfo.FullName.ToBold()}?");
 
             }
             else
@@ -148,7 +149,7 @@ namespace Gsemac.Discord {
 
         private readonly IDiscordBotOptions botConfiguration;
         private readonly CommandService commandService;
-        private readonly IDocumentationService helpService;
+        private readonly ICommandMetadataService helpService;
         private readonly BaseSocketClient discordClient;
         private readonly IServiceProvider serviceProvider;
         private readonly ILogger logger;

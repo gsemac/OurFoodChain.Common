@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public interface IListPaginationOptions {
 

@@ -1,7 +1,7 @@
 ﻿using Discord;
 using System.Collections.Generic;
 
-namespace Gsemac.Discord {
+namespace Gsemac.Discord.Interactivity {
 
     public interface IPaginatedMessageBuilder {
 
