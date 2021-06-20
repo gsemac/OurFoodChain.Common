@@ -1,9 +1,5 @@
 ﻿using Discord;
-using Discord.Commands;
 using Gsemac.IO.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Gsemac.Discord {
