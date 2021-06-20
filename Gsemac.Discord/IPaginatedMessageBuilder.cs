@@ -7,12 +7,12 @@ namespace Gsemac.Discord {
 
         IPaginatedMessageBuilder WithDescription(string value);
         IPaginatedMessageBuilder WithFooter(string value);
-        IPaginatedMessageBuilder WithPage(Embed embed);
-        IPaginatedMessageBuilder WithPageBreak();
+        IPaginatedMessageBuilder AddPage(Embed embed);
+        IPaginatedMessageBuilder AddPageBreak();
         IPaginatedMessageBuilder WithPageNumbers();
-        IPaginatedMessageBuilder WithPaginatedFields(IEnumerable<EmbedField> fields);
-        IPaginatedMessageBuilder WithPaginatedListItems(IEnumerable<object> items, IListPaginationOptions options);
-        IPaginatedMessageBuilder WithPaginatedText(string value);
+        IPaginatedMessageBuilder AddPaginatedFields(IEnumerable<EmbedField> fields);
+        IPaginatedMessageBuilder AddPaginatedListItems(IEnumerable<object> items, IListPaginationOptions options);
+        IPaginatedMessageBuilder AddPaginatedText(string value);
         IPaginatedMessageBuilder WithTitle(string value);
 
         IPaginatedMessage Build();

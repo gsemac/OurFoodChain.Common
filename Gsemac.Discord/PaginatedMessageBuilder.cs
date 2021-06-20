@@ -40,39 +40,39 @@ namespace Gsemac.Discord {
 
         }
 
-        public IPaginatedMessageBuilder WithPaginatedText(string value) {
+        public IPaginatedMessageBuilder AddPaginatedText(string value) {
 
             paginatedContent.Add(new TextContent(value));
 
             return this;
 
         }
-        public IPaginatedMessageBuilder WithPaginatedFields(IEnumerable<EmbedField> fields) {
+        public IPaginatedMessageBuilder AddPaginatedFields(IEnumerable<EmbedField> fields) {
 
             paginatedContent.Add(new FieldsContent(fields));
 
             return this;
 
         }
-        public IPaginatedMessageBuilder WithPaginatedListItems(IEnumerable<object> items, IListPaginationOptions options) {
+        public IPaginatedMessageBuilder AddPaginatedListItems(IEnumerable<object> items, IListPaginationOptions options) {
 
             paginatedContent.Add(new ListItemsContent(items, options));
 
             return this;
 
         }
-        public IPaginatedMessageBuilder WithPage(Embed embed) {
+        public IPaginatedMessageBuilder AddPage(Embed embed) {
 
             paginatedContent.Add(new PageContent(embed));
 
             // Add a page break after pages added manually so that they're not appended to.
 
-            WithPageBreak();
+            AddPageBreak();
 
             return this;
 
         }
-        public IPaginatedMessageBuilder WithPageBreak() {
+        public IPaginatedMessageBuilder AddPageBreak() {
 
             paginatedContent.Add(new PageBreakContent());
 
@@ -116,6 +116,16 @@ namespace Gsemac.Discord {
                             break;
 
                     }
+
+                }
+
+            }
+
+            if (withPageNumbers) {
+
+                for (int i = 0; i < pages.Count; ++i) {
+
+                    pages[i] = AddPageNumber(pages[i], i + 1, pages.Count);
 
                 }
 
@@ -225,6 +235,7 @@ namespace Gsemac.Discord {
                 .Build();
 
         }
+
         private void AddPaginatedText(ICollection<PaginatedMessagePage> pages, TextContent textContent) {
 
             if (textContent.Text.Length <= 0)
@@ -252,6 +263,23 @@ namespace Gsemac.Discord {
                 pages.Add(new PaginatedMessagePage(embed));
 
             }
+
+        }
+
+        private static PaginatedMessagePage AddPageNumber(PaginatedMessagePage page, int currentPage, int totalPages) {
+
+            if (page.Embed is null)
+                return page;
+
+            string footer = $"Page {currentPage} of {totalPages}";
+
+            if (!string.IsNullOrWhiteSpace(page.Embed.Footer?.Text))
+                footer = footer + " — " + page.Embed.Footer.Value.Text;
+
+            return new PaginatedMessagePage(new EmbedBuilder()
+                .WithPropertiesFrom(page.Embed)
+                .WithFooter(footer)
+                .Build());
 
         }
 
