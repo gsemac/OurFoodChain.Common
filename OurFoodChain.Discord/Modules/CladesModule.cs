@@ -37,7 +37,7 @@ namespace OurFoodChain.Discord.Modules {
 
                     await Db.SaveChangesAsync();
 
-                    await ReplySuccessAsync($"Successfully created new {TaxonRank.ToString(parsedRank)}, {name.ToProper().ToBold()}.");
+                    await ReplySuccessAsync($"Successfully created new {TaxonRank.ToString(parsedRank)} {name.ToProper().ToBold()}.");
 
                 }
                 else {
