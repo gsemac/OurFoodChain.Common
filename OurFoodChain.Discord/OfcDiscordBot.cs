@@ -4,7 +4,6 @@ using Gsemac.IO.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using OurFoodChain.Data;
-using OurFoodChain.Data.Dal;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -30,7 +29,9 @@ namespace OurFoodChain.Discord {
 
         protected override Task ConfigureServicesAsync(IServiceCollection services) {
 
-            services.AddDbContext<IOfcDbContext, OfcDbContext>(builder => builder.UseSqlite($"Data Source={options.DatabaseFilePath};"));
+            services.AddDbContext<IOfcDbContext, OfcDbContext>(builder => builder.UseSqlite($"Data Source={options.DatabaseFilePath};"))
+                .AddSingleton<IDiscordBotOptions>(options)
+                .AddSingleton(options);
 
             return base.ConfigureServicesAsync(services);
 

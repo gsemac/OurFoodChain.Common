@@ -9,6 +9,8 @@ namespace OurFoodChain.Discord.Modules {
 
         // Public members
 
+        public new IOfcDiscordBotOptions Config { get; set; }
+
         public OfcModuleBase(IOfcDbContext dbContext) {
 
             if (dbContext is null)

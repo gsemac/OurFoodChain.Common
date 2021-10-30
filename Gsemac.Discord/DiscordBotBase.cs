@@ -88,12 +88,12 @@ namespace Gsemac.Discord {
 
             Logger.Info("Adding services");
 
-            services.AddSingleton(Options)
-                .AddSingleton(Client)
+            services.AddSingleton(Client)
                 .AddSingleton<BaseSocketClient>(Client)
                 .AddSingleton<CommandService>()
                 .AddSingleton(Logger);
 
+            services.TryAddSingleton(Options);
             services.TryAddSingleton<IInteractiveMessageServiceOptions, InteractiveMessageServiceOptions>();
             services.TryAddSingleton<IInteractiveMessageService, InteractiveCommandHandlerService>();
             services.TryAddSingleton<ICommandHandlerService>(provider => provider.GetRequiredService<IInteractiveMessageService>() as InteractiveCommandHandlerService);
