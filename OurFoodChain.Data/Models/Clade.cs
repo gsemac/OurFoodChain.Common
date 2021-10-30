@@ -11,6 +11,7 @@ namespace OurFoodChain.Data.Models {
         public RankPosition Position { get; set; } = RankPosition.On;
 
         public virtual Clade Parent { get; set; }
+        public virtual Species Species { get; set; }
 
     }
 

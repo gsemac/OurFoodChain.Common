@@ -7,12 +7,12 @@ namespace OurFoodChain.Data.Extensions {
 
         public static IQueryable<Species> FilterBy(this IQueryable<Species> queryable, World world) {
 
-            return queryable.Where(s => s.WorldId == world.Id);
+            return queryable.Where(s => s.Clade.WorldId == world.Id);
 
         }
         public static IQueryable<Species> FilterBy(this IQueryable<Species> queryable, string genus, string species) {
 
-            return queryable.Where(s => s.Name == species && s.Genus.Name == genus);
+            return queryable.Where(s => s.Clade.Name == species && s.Clade.Parent.Name == genus);
 
         }
 

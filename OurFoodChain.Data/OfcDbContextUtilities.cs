@@ -51,8 +51,13 @@ namespace OurFoodChain.Data {
                 .WithOne(e => e.Clade)
                 .HasForeignKey<Clade>(e => e.DisplayedCommonNameId);
 
+            // It is possible for multiple taxa of the same rank to share the same name.
+            // While the most common example would be species, such instances exist for other ranks as well.
+            // https://species.wikimedia.org/wiki/List_of_valid_homonyms
+            // This should be allowed to occur, but only for taxa with different parents (e.g. there should not be two of the same species in the same genus).
+
             modelBuilder.Entity<Clade>()
-                .HasIndex(e => new { e.WorldId, e.Rank, e.Name })
+                .HasIndex(e => new { e.WorldId, e.ParentId, e.Name })
                 .IsUnique();
 
             modelBuilder.Entity<Clade>()
@@ -66,20 +71,12 @@ namespace OurFoodChain.Data {
             // Species
 
             modelBuilder.Entity<Species>()
-                .HasOne(e => e.DisplayedCommonName)
+                .HasOne(e => e.Clade)
                 .WithOne(e => e.Species)
-                .HasForeignKey<Species>(e => e.DisplayedCommonNameId);
+                .HasForeignKey<Species>(e => e.CladeId);
 
             modelBuilder.Entity<Species>()
-                .HasIndex(e => new { e.WorldId, e.GenusId, e.Name })
-                .IsUnique();
-
-            modelBuilder.Entity<Species>()
-                .Property(e => e.Name)
-                .HasConversion(new CaseConversionStringConverter(StringCasing.Lower));
-
-            modelBuilder.Entity<SpeciesCommonName>()
-                .HasIndex(e => new { e.SpeciesId, e.CommonName })
+                .HasIndex(e => new { e.CladeId })
                 .IsUnique();
 
             modelBuilder.Entity<SpeciesCreator>()
