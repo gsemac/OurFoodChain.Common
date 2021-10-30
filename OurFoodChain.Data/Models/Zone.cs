@@ -24,7 +24,7 @@ namespace OurFoodChain.Data.Models {
         public virtual World World { get; set; }
         public virtual CustomZoneType CustomZoneType { get; set; }
         public virtual Zone Parent { get; set; }
-        public virtual PictureGallery Gallery { get; set; }
+        public virtual Gallery Gallery { get; set; }
         public virtual ZoneCommonName DisplayedCommonName { get; set; }
         public virtual IEnumerable<ZoneCommonName> CommonNames { get; }
 

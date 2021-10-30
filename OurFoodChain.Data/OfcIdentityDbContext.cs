@@ -15,7 +15,7 @@ namespace OurFoodChain.Data {
         public DbSet<CustomSpeciesRelationship> CustomSpeciesRelationships { get; set; }
         public DbSet<CustomSpeciesRole> CustomSpeciesRoles { get; set; }
         public DbSet<Picture> Pictures { get; set; }
-        public DbSet<PictureGallery> PictureGalleries { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
         public DbSet<GalleryPicture> GalleryPictures { get; set; }
         public DbSet<Zone> Zones { get; set; }
         public DbSet<CustomZoneType> CustomZoneTypes { get; set; }

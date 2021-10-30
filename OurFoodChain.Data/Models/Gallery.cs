@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public class PictureGallery {
+    public class Gallery {
 
         public int Id { get; set; }
         public int WorldId { get; set; }

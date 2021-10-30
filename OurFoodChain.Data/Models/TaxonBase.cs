@@ -18,7 +18,7 @@ namespace OurFoodChain.Data.Models {
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
         public virtual World World { get; set; }
-        public virtual PictureGallery Gallery { get; set; }
+        public virtual Gallery Gallery { get; set; }
         public virtual CommonNameT DisplayedCommonName { get; set; }
         public virtual IEnumerable<CommonNameT> CommonNames { get; }
         public virtual Picture DisplayedPicture { get; set; }
