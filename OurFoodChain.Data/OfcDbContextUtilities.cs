@@ -85,11 +85,6 @@ namespace OurFoodChain.Data {
             modelBuilder.Entity<SpeciesCreator>()
                 .HasKey(e => new { e.SpeciesId, e.CreatorId });
 
-            modelBuilder.Entity<SpeciesExtinction>()
-                .HasOne(e => e.Species)
-                .WithOne()
-                .HasForeignKey<SpeciesExtinction>(e => e.SpeciesId);
-
             modelBuilder.Entity<SpeciesRelationship>()
                 .HasKey(e => new { e.ObjectSpeciesId, e.SubjectSpeciesId, e.CustomRelationshipId, e.Relationship });
 
