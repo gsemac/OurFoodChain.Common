@@ -35,7 +35,7 @@ namespace OurFoodChain.Data.Dal {
                 .ToListAsync();
 
         }
-        public async Task<IEnumerable<Clade>> GetCladesAsync(World world, string name, TaxonRankId rank) {
+        public async Task<IEnumerable<Clade>> GetCladesAsync(World world, string name, Rank rank) {
 
             return await Context.Clades.FilterBy(world)
                 .FilterBy(name)

@@ -2,37 +2,39 @@
 
 namespace OurFoodChain.Taxonomy {
 
-    public static class TaxonRank {
+    public static class RankUtilities {
 
-        public static string ToString(TaxonRankId rankId, bool plural = false) {
+        // Public members
+
+        public static string ToString(Rank rankId, bool plural = false) {
 
             switch (rankId) {
 
-                case TaxonRankId.Domain:
+                case Rank.Domain:
                     return plural ? "domains" : "domain";
 
-                case TaxonRankId.Kingdom:
+                case Rank.Kingdom:
                     return plural ? "kingdoms" : "kingdom";
 
-                case TaxonRankId.Phylum:
+                case Rank.Phylum:
                     return plural ? "phyla" : "phylum";
 
-                case TaxonRankId.Class:
+                case Rank.Class:
                     return plural ? "classes" : "class";
 
-                case TaxonRankId.Order:
+                case Rank.Order:
                     return plural ? "orders" : "order";
 
-                case TaxonRankId.Family:
+                case Rank.Family:
                     return plural ? "families" : "family";
 
-                case TaxonRankId.Genus:
+                case Rank.Genus:
                     return plural ? "genera" : "genus";
 
-                case TaxonRankId.Species:
+                case Rank.Species:
                     return "species";
 
-                case TaxonRankId.Unranked:
+                case Rank.Unranked:
                 default:
                     return plural ? "unranked clades" : "unranked clade";
 
@@ -40,52 +42,52 @@ namespace OurFoodChain.Taxonomy {
 
         }
 
-        public static bool TryParse(string value, out TaxonRankId rankId) {
+        public static bool TryParse(string value, out Rank rankId) {
 
             if (value is null)
                 throw new ArgumentNullException(nameof(value));
 
-            rankId = TaxonRankId.Unranked;
+            rankId = Rank.Unranked;
 
             switch (value.Trim().ToLowerInvariant()) {
 
                 case "domain":
                 case "domains":
-                    rankId = TaxonRankId.Domain;
+                    rankId = Rank.Domain;
                     return true;
 
                 case "kingdom":
                 case "kingdoms":
-                    rankId = TaxonRankId.Kingdom;
+                    rankId = Rank.Kingdom;
                     return true;
 
                 case "phylum":
                 case "phyla":
-                    rankId = TaxonRankId.Phylum;
+                    rankId = Rank.Phylum;
                     return true;
 
                 case "class":
                 case "classes":
-                    rankId = TaxonRankId.Class;
+                    rankId = Rank.Class;
                     return true;
 
                 case "order":
                 case "orders":
-                    rankId = TaxonRankId.Order;
+                    rankId = Rank.Order;
                     return true;
 
                 case "family":
                 case "families":
-                    rankId = TaxonRankId.Family;
+                    rankId = Rank.Family;
                     return true;
 
                 case "genus":
                 case "genera":
-                    rankId = TaxonRankId.Genus;
+                    rankId = Rank.Genus;
                     return true;
 
                 case "species":
-                    rankId = TaxonRankId.Species;
+                    rankId = Rank.Species;
                     return true;
 
                 case "unranked":
@@ -93,7 +95,7 @@ namespace OurFoodChain.Taxonomy {
                 case "unranked clades":
                 case "clade":
                 case "clades":
-                    rankId = TaxonRankId.Unranked;
+                    rankId = Rank.Unranked;
                     return true;
 
                 default:
@@ -102,9 +104,9 @@ namespace OurFoodChain.Taxonomy {
             }
 
         }
-        public static TaxonRankId Parse(string value) {
+        public static Rank Parse(string value) {
 
-            if (TryParse(value, out TaxonRankId taxonRankId))
+            if (TryParse(value, out Rank taxonRankId))
                 return taxonRankId;
 
             throw new ArgumentException(Properties.ExceptionMessages.StringWasNotInTheCorrectFormat, nameof(value));

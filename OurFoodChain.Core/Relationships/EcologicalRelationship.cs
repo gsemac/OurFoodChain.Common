@@ -1,6 +1,6 @@
 ﻿namespace OurFoodChain.Relationships {
 
-    public enum EcologicalRelationshipId {
+    public enum EcologicalRelationship {
         None = 0,
         Custom,
         Predation,

@@ -1,7 +1,8 @@
 ﻿namespace OurFoodChain.Taxonomy {
 
-    public enum TaxonRankId {
+    public enum Rank {
         Unranked = 0,
+        Custom,
         Domain,
         Kingdom,
         Phylum,

@@ -1,6 +1,6 @@
 ﻿namespace OurFoodChain.Taxonomy {
 
-    public enum TaxonPosition {
+    public enum RankPosition {
         On,
         Before,
         After

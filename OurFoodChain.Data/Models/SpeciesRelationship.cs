@@ -7,7 +7,7 @@ namespace OurFoodChain.Data.Models {
         public int ObjectSpeciesId { get; set; }
         public int SubjectSpeciesId { get; set; }
         public int? CustomRelationshipId { get; set; }
-        public EcologicalRelationshipId Relationship { get; set; } = EcologicalRelationshipId.None;
+        public EcologicalRelationship Relationship { get; set; } = EcologicalRelationship.None;
         public string Description { get; set; }
 
         public virtual Species ActingSpecies { get; set; }

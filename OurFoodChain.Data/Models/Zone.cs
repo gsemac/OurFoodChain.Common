@@ -16,7 +16,7 @@ namespace OurFoodChain.Data.Models {
         public int? DisplayedPictureId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public ZoneTypeId ZoneTypeId { get; set; } = ZoneTypeId.None;
+        public ZoneType ZoneType { get; set; } = ZoneType.None;
         public ZoneFlags Flags { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;

@@ -19,12 +19,12 @@ namespace OurFoodChain.Discord.Modules {
             base(dbContext) {
         }
 
-        [Command("add"), Alias("a")]
-        public async Task AddAsync(string name, NamedArguments arguments = null) {
+        [Command("create"), Alias("c")]
+        public async Task CreateAsync(string name, NamedArguments arguments = null) {
 
             arguments ??= new NamedArguments();
 
-            if (TaxonRank.TryParse(arguments.Rank, out TaxonRankId parsedRank) && parsedRank != TaxonRankId.Species) {
+            if (RankUtilities.TryParse(arguments.Rank, out Rank parsedRank) && parsedRank != Rank.Species) {
 
                 if (!(await Db.Clades.GetCladesAsync(name, parsedRank)).Any()) {
 
@@ -37,17 +37,17 @@ namespace OurFoodChain.Discord.Modules {
 
                     await Db.SaveChangesAsync();
 
-                    await ReplySuccessAsync($"Successfully created new {TaxonRank.ToString(parsedRank)} {name.ToProper().ToBold()}.");
+                    await ReplySuccessAsync($"Successfully created new {RankUtilities.ToString(parsedRank)} {name.ToProper().ToBold()}.");
 
                 }
                 else {
 
-                    await ReplyWarningAsync($"The {TaxonRank.ToString(parsedRank)} '{name.ToProper()}' already exists.");
+                    await ReplyWarningAsync($"The {RankUtilities.ToString(parsedRank)} '{name.ToProper()}' already exists.");
 
                 }
 
             }
-            else if (parsedRank == TaxonRankId.Species) {
+            else if (parsedRank == Rank.Species) {
 
                 await ReplyErrorAsync(Properties.CommandResultMessages.UsedCladeCommandWithSpecies);
 

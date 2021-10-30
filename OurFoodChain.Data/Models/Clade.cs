@@ -7,8 +7,8 @@ namespace OurFoodChain.Data.Models {
 
         public int? ParentId { get; set; }
 
-        public TaxonRankId Rank { get; set; } = TaxonRankId.Unranked;
-        public TaxonPosition Position { get; set; } = TaxonPosition.On;
+        public Rank Rank { get; set; } = Rank.Unranked;
+        public RankPosition Position { get; set; } = RankPosition.On;
 
         public virtual Clade Parent { get; set; }
 

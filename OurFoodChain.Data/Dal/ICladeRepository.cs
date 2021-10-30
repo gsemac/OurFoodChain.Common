@@ -10,7 +10,7 @@ namespace OurFoodChain.Data.Dal {
         Task<Clade> GetCladeAsync(int id);
         Task<IEnumerable<Clade>> GetCladesAsync(World world);
         Task<IEnumerable<Clade>> GetCladesAsync(World world, string name);
-        Task<IEnumerable<Clade>> GetCladesAsync(World world, string name, TaxonRankId rank);
+        Task<IEnumerable<Clade>> GetCladesAsync(World world, string name, Rank rank);
 
     }
 
