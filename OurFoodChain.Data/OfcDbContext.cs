@@ -25,7 +25,6 @@ namespace OurFoodChain.Data {
         public DbSet<Species> Species { get; set; }
         public DbSet<SpeciesCommonName> SpeciesCommonNames { get; set; }
         public DbSet<SpeciesCreator> SpeciesCreators { get; set; }
-        public DbSet<SpeciesAncestor> SpeciesAncestors { get; set; }
         public DbSet<SpeciesExtinction> SpeciesExtinctions { get; set; }
         public DbSet<SpeciesRelationship> SpeciesRelationships { get; set; }
         public DbSet<SpeciesRole> SpeciesRoles { get; set; }
