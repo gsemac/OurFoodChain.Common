@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OurFoodChain.Discord.Modules {
 
+    [Group("world")]
     public sealed class WorldModule :
         OfcModuleBase {
 
@@ -13,7 +14,7 @@ namespace OurFoodChain.Discord.Modules {
             base(dbContext) {
         }
 
-        [Command("world")]
+        [Command]
         public async Task WorldAsync() {
 
             World world = await Db.Worlds.GetOrCreateWorldAsync();
