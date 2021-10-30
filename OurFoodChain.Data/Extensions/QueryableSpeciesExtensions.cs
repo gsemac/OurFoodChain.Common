@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace OurFoodChain.Data.Extensions {
 
-    public static class QueryableSpeciesExtensions {
+    internal static class QueryableSpeciesExtensions {
 
         public static IQueryable<Species> FilterBy(this IQueryable<Species> queryable, World world) {
 

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace OurFoodChain.Data.Extensions {
 
-    public static class QueryableCladesExtensions {
+    internal static class QueryableCladesExtensions {
 
         public static IQueryable<Clade> FilterBy(this IQueryable<Clade> queryable, World world) {
 

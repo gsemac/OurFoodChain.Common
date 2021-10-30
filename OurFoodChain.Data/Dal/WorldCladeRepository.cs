@@ -1,23 +1,20 @@
 ﻿using Gsemac.Core;
 using Microsoft.EntityFrameworkCore;
-using OurFoodChain.Data;
-using OurFoodChain.Data.Dal;
 using OurFoodChain.Data.Extensions;
 using OurFoodChain.Data.Models;
 using OurFoodChain.Taxonomy;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
-namespace OurFoodChain.Discord.Data.Dal {
+namespace OurFoodChain.Data.Dal {
 
-    public class GuildCladeRepository :
+    public class WorldCladeRepository :
         CladeRepository {
 
         // Public members
 
-        public GuildCladeRepository(IOfcDbContext dbContext, AsyncLazy<World> world) :
+        public WorldCladeRepository(IOfcDbContext dbContext, AsyncLazy<World> world) :
             base(dbContext) {
 
             if (world is null)

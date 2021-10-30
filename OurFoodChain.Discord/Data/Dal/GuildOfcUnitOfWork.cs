@@ -12,9 +12,9 @@ namespace OurFoodChain.Discord.Data.Dal {
 
         // Public members
 
-        public GuildCladeRepository Clades => new GuildCladeRepository(dbContext, world);
-        public GuildSpeciesRepository Species => new GuildSpeciesRepository(dbContext, world);
-        public GuildWorldRepository Worlds => new GuildWorldRepository(dbContext, guild);
+        public WorldCladeRepository Clades => new(dbContext, world);
+        public WorldSpeciesRepository Species => new(dbContext, world);
+        public GuildWorldRepository Worlds => new(dbContext, guild);
 
         ICladeRepository IOfcUnitOfWork.Clades => Clades;
         ISpeciesRepository IOfcUnitOfWork.Species => Species;
@@ -49,7 +49,7 @@ namespace OurFoodChain.Discord.Data.Dal {
 
         private readonly IOfcDbContext dbContext;
         private readonly IGuild guild;
-        private AsyncLazy<World> world;
+        private readonly AsyncLazy<World> world;
 
     }
 
