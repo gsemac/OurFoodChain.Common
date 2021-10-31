@@ -25,7 +25,7 @@ namespace OurFoodChain.Data {
                 .HasKey(e => new { e.WorldId, e.CreatorId });
 
             modelBuilder.Entity<CreatorFavorite>()
-                .HasKey(e => new { e.CreatorId, e.CladeId });
+                .HasKey(e => new { e.CreatorId, e.TaxonId });
 
             // Pictures
 
@@ -48,12 +48,12 @@ namespace OurFoodChain.Data {
 
             // Clades
 
-            modelBuilder.Entity<Clade>()
+            modelBuilder.Entity<Taxon>()
                 .HasOne(e => e.DisplayCommonName)
-                .WithOne(e => e.Clade)
-                .HasForeignKey<Clade>(e => e.DisplayCommonNameId);
+                .WithOne(e => e.Taxon)
+                .HasForeignKey<Taxon>(e => e.DisplayCommonNameId);
 
-            modelBuilder.Entity<Clade>()
+            modelBuilder.Entity<Taxon>()
                 .HasOne(e => e.Parent)
                 .WithMany()
                 .HasForeignKey(e => e.ParentId);
@@ -63,39 +63,39 @@ namespace OurFoodChain.Data {
             // https://species.wikimedia.org/wiki/List_of_valid_homonyms
             // This should be allowed to occur, but only for taxa with different parents (e.g. there should not be two of the same species in the same genus).
 
-            modelBuilder.Entity<Clade>()
+            modelBuilder.Entity<Taxon>()
                 .HasIndex(e => new { e.WorldId, e.ParentId, e.Name })
                 .IsUnique();
 
-            modelBuilder.Entity<Clade>()
+            modelBuilder.Entity<Taxon>()
                 .Property(e => e.Name)
                 .HasConversion(new CaseConversionStringConverter(StringCasing.Lower));
 
             ConfigureCladeAncestor(modelBuilder);
 
-            modelBuilder.Entity<CladeCommonName>()
-                .HasIndex(e => new { e.CladeId, e.CommonName })
+            modelBuilder.Entity<TaxonCommonName>()
+                .HasIndex(e => new { e.TaxonId, e.CommonName })
                 .IsUnique();
 
-            modelBuilder.Entity<CladeCreator>()
-                .HasKey(e => new { e.CladeId, e.CreatorId });
+            modelBuilder.Entity<TaxonCreator>()
+                .HasKey(e => new { e.TaxonId, e.CreatorId });
 
-            modelBuilder.Entity<CladeField>()
-                .HasKey(e => new { e.CladeId, e.Name });
+            modelBuilder.Entity<TaxonField>()
+                .HasKey(e => new { e.TaxonId, e.Name });
 
-            modelBuilder.Entity<CladeRelationship>()
+            modelBuilder.Entity<TaxonRelationship>()
                 .HasKey(e => new { e.AgentId, e.PatientId, e.CustomRelationshipId, e.RelationshipType });
 
-            modelBuilder.Entity<CladeRole>()
-                .HasKey(e => new { e.CladeId, e.CustomRoleId, e.RoleType });
+            modelBuilder.Entity<TaxonRole>()
+                .HasKey(e => new { e.TaxonId, e.CustomRoleId, e.RoleType });
 
-            modelBuilder.Entity<CladeStatus>()
-                .HasOne(e => e.Clade)
+            modelBuilder.Entity<TaxonStatus>()
+                .HasOne(e => e.Taxon)
                 .WithOne()
-                .HasForeignKey<CladeStatus>(e => e.CladeId);
+                .HasForeignKey<TaxonStatus>(e => e.TaxonId);
 
-            modelBuilder.Entity<CladeZone>()
-                .HasKey(e => new { e.CladeId, e.ZoneId });
+            modelBuilder.Entity<TaxonZone>()
+                .HasKey(e => new { e.TaxonId, e.ZoneId });
 
         }
 
@@ -103,18 +103,18 @@ namespace OurFoodChain.Data {
 
         private static void ConfigureCladeAncestor(ModelBuilder modelBuilder) {
 
-            modelBuilder.Entity<CladeAncestor>()
-                .HasKey(e => new { e.AncestorId, e.CladeId });
+            modelBuilder.Entity<TaxonAncestor>()
+                .HasKey(e => new { e.AncestorId, e.TaxonId });
 
-            modelBuilder.Entity<CladeAncestor>()
+            modelBuilder.Entity<TaxonAncestor>()
                 .HasOne(e => e.Ancestor)
                 .WithMany(e => e.Ancestors)
                 .HasForeignKey(e => e.AncestorId);
 
-            modelBuilder.Entity<CladeAncestor>()
-                .HasOne(e => e.Clade)
+            modelBuilder.Entity<TaxonAncestor>()
+                .HasOne(e => e.Taxon)
                 .WithMany()
-                .HasForeignKey(e => e.CladeId);
+                .HasForeignKey(e => e.TaxonId);
 
         }
 

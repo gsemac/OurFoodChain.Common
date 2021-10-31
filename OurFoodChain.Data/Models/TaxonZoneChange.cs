@@ -3,8 +3,8 @@
 namespace OurFoodChain.Data.Models {
 
     [Keyless]
-    public class CladeZoneChange :
-        CladeZoneBase {
+    public class TaxonZoneChange :
+        TaxonZoneBase {
 
         public int Id { get; set; }
         public EditType EditType { get; set; } = EditType.None;

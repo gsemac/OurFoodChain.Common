@@ -8,13 +8,13 @@ namespace OurFoodChain.Data.Dal {
 
         // Public members
 
-        public ICladeRepository Clades { get; }
+        public ITaxonRepository Taxa { get; }
         public IWorldRepository Worlds { get; }
 
         public OfcUnitOfWork(IOfcDbContext context) :
             base(context) {
 
-            Clades = new CladeRepository(context);
+            Taxa = new TaxonRepository(context);
             Worlds = new WorldRepository(context);
 
         }

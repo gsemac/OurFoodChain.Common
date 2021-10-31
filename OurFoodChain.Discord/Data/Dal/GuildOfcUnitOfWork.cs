@@ -12,10 +12,10 @@ namespace OurFoodChain.Discord.Data.Dal {
 
         // Public members
 
-        public WorldCladeRepository Clades => new(dbContext, world);
+        public WorldTaxonRepository Taxa => new(dbContext, world);
         public GuildWorldRepository Worlds => new(dbContext, guild);
 
-        ICladeRepository IOfcUnitOfWork.Clades => Clades;
+        ITaxonRepository IOfcUnitOfWork.Taxa => Taxa;
         IWorldRepository IOfcUnitOfWork.Worlds => Worlds;
 
         public GuildOfcUnitOfWork(IOfcDbContext dbContext, IGuild guild) {

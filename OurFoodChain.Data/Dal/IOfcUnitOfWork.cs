@@ -5,7 +5,7 @@ namespace OurFoodChain.Data.Dal {
     public interface IOfcUnitOfWork :
          IUnitOfWork {
 
-        ICladeRepository Clades { get; }
+        ITaxonRepository Taxa { get; }
         IWorldRepository Worlds { get; }
 
     }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public class CladeRelationship {
+    public class TaxonRelationship {
 
         public int AgentId { get; set; }
         public int PatientId { get; set; }
@@ -14,8 +14,8 @@ namespace OurFoodChain.Data.Models {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual Clade Agent { get; set; }
-        public virtual Clade Patient { get; set; }
+        public virtual Taxon Agent { get; set; }
+        public virtual Taxon Patient { get; set; }
         public virtual CustomRelationship CustomRelationship { get; set; }
 
     }

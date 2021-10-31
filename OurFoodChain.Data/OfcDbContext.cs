@@ -20,16 +20,16 @@ namespace OurFoodChain.Data {
         public DbSet<CustomBiome> CustomBiomes { get; set; }
         public DbSet<ZoneField> ZoneFields { get; set; }
         public DbSet<ZoneCommonName> ZoneCommonNames { get; set; }
-        public DbSet<Clade> Clades { get; set; }
-        public DbSet<CladeAncestor> CladeAncestors { get; set; }
-        public DbSet<CladeCommonName> CladeCommonNames { get; set; }
-        public DbSet<CladeCreator> CladeCreators { get; set; }
-        public DbSet<CladeField> CladeFields { get; set; }
-        public DbSet<CladeStatus> CladeStatuses { get; set; }
-        public DbSet<CladeRelationship> CladeRelationships { get; set; }
-        public DbSet<CladeRole> CladeRoles { get; set; }
-        public DbSet<CladeZone> CladeZones { get; set; }
-        public DbSet<CladeZoneChange> CladeZoneChanges { get; set; }
+        public DbSet<Taxon> Taxa { get; set; }
+        public DbSet<TaxonAncestor> TaxonAncestors { get; set; }
+        public DbSet<TaxonCommonName> TaxonCommonNames { get; set; }
+        public DbSet<TaxonCreator> TaxonCreators { get; set; }
+        public DbSet<TaxonField> TaxonFields { get; set; }
+        public DbSet<TaxonStatus> TaxonStatuses { get; set; }
+        public DbSet<TaxonRelationship> TaxonRelationships { get; set; }
+        public DbSet<TaxonRole> TaxonRoles { get; set; }
+        public DbSet<TaxonZone> TaxonZones { get; set; }
+        public DbSet<TaxonZoneChange> TaxonZoneChanges { get; set; }
         public DbSet<Era> Eras { get; set; }
 
         public OfcDbContext(DbContextOptions options) :

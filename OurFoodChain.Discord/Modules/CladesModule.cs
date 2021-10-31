@@ -26,14 +26,14 @@ namespace OurFoodChain.Discord.Modules {
 
             if (RankUtilities.TryParse(arguments.Rank, out Rank parsedRank) && parsedRank != Rank.Species) {
 
-                if (!(await Db.Clades.GetCladesAsync(name, parsedRank)).Any()) {
+                if (!(await Db.Taxa.GetTaxaAsync(name, parsedRank)).Any()) {
 
-                    Clade clade = new() {
+                    Taxon taxon = new() {
                         Name = name,
                         Rank = parsedRank,
                     };
 
-                    await Db.Clades.AddCladeAsync(clade);
+                    await Db.Taxa.AddTaxonAsync(taxon);
 
                     await Db.SaveChangesAsync();
 

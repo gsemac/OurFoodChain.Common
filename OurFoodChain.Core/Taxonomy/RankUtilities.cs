@@ -36,7 +36,7 @@ namespace OurFoodChain.Taxonomy {
 
                 case Rank.Unranked:
                 default:
-                    return plural ? "unranked clades" : "unranked clade";
+                    return plural ? "unranked taxa" : "unranked taxon";
 
             }
 
@@ -95,6 +95,10 @@ namespace OurFoodChain.Taxonomy {
                 case "unranked clades":
                 case "clade":
                 case "clades":
+                case "unranked taxon":
+                case "unranked taxa":
+                case "taxon":
+                case "taxa":
                     rankId = Rank.Unranked;
                     return true;
 

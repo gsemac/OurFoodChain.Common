@@ -4,18 +4,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public abstract class CladeZoneBase {
+    public class TaxonAncestor {
 
         [Required]
-        public int CladeId { get; set; }
+        public int AncestorId { get; set; }
         [Required]
-        public int ZoneId { get; set; }
-        public string Description { get; set; }
+        public int TaxonId { get; set; }
+
+        public AncestorFlags Flags { get; set; } = AncestorFlags.None;
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual Clade Clade { get; set; }
-        public virtual Zone Zone { get; set; }
+        public virtual Taxon Ancestor { get; set; }
+        public virtual Taxon Taxon { get; set; }
 
     }
 

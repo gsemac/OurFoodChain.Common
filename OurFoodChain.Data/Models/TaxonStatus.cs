@@ -4,10 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public class CladeStatus {
+    public class TaxonStatus {
 
         [Key, Required]
-        public int CladeId { get; set; }
+        public int TaxonId { get; set; }
 
         [Required]
         public ConservationStatus Status { get; set; } = ConservationStatus.NotEvaluated;
@@ -15,7 +15,7 @@ namespace OurFoodChain.Data.Models {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual Clade Clade { get; set; }
+        public virtual Taxon Taxon { get; set; }
 
     }
 

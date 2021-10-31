@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace OurFoodChain.Data.Dal {
 
-    public class WorldCladeRepository :
-        CladeRepository {
+    public class WorldTaxonRepository :
+        TaxonRepository {
 
         // Public members
 
-        public WorldCladeRepository(IOfcDbContext dbContext, AsyncLazy<World> world) :
+        public WorldTaxonRepository(IOfcDbContext dbContext, AsyncLazy<World> world) :
             base(dbContext) {
 
             if (world is null)
@@ -24,32 +24,32 @@ namespace OurFoodChain.Data.Dal {
 
         }
 
-        public async Task<IEnumerable<Clade>> GetCladesAsync() {
+        public async Task<IEnumerable<Taxon>> GetTaxaAsync() {
 
-            return await Context.Clades.FilterBy(await world).ToListAsync();
+            return await Context.Taxa.FilterBy(await world).ToListAsync();
 
         }
-        public async Task<IEnumerable<Clade>> GetCladesAsync(string name) {
+        public async Task<IEnumerable<Taxon>> GetTaxaAsync(string name) {
 
-            return await Context.Clades.FilterBy(await world)
+            return await Context.Taxa.FilterBy(await world)
                 .FilterBy(name)
                 .ToListAsync();
 
         }
-        public async Task<IEnumerable<Clade>> GetCladesAsync(string name, Rank rank) {
+        public async Task<IEnumerable<Taxon>> GetTaxaAsync(string name, Rank rank) {
 
-            return await Context.Clades.FilterBy(await world)
+            return await Context.Taxa.FilterBy(await world)
                 .FilterBy(name)
                 .FilterBy(rank)
                 .ToListAsync();
 
         }
 
-        public async Task<Clade> AddCladeAsync(Clade clade) {
+        public async Task<Taxon> AddTaxonAsync(Taxon taxon) {
 
-            clade.World = await world;
+            taxon.World = await world;
 
-            return await AddAsync(clade);
+            return await AddAsync(taxon);
 
         }
 

@@ -25,16 +25,16 @@ namespace OurFoodChain.Data {
         DbSet<ZoneField> ZoneFields { get; set; }
         DbSet<ZoneCommonName> ZoneCommonNames { get; set; }
 
-        DbSet<Clade> Clades { get; set; }
-        DbSet<CladeAncestor> CladeAncestors { get; set; }
-        DbSet<CladeCommonName> CladeCommonNames { get; set; }
-        DbSet<CladeCreator> CladeCreators { get; set; }
-        DbSet<CladeField> CladeFields { get; set; }
-        DbSet<CladeStatus> CladeStatuses { get; set; }
-        DbSet<CladeRelationship> CladeRelationships { get; set; }
-        DbSet<CladeRole> CladeRoles { get; set; }
-        DbSet<CladeZone> CladeZones { get; set; }
-        DbSet<CladeZoneChange> CladeZoneChanges { get; set; }
+        DbSet<Taxon> Taxa { get; set; }
+        DbSet<TaxonAncestor> TaxonAncestors { get; set; }
+        DbSet<TaxonCommonName> TaxonCommonNames { get; set; }
+        DbSet<TaxonCreator> TaxonCreators { get; set; }
+        DbSet<TaxonField> TaxonFields { get; set; }
+        DbSet<TaxonStatus> TaxonStatuses { get; set; }
+        DbSet<TaxonRelationship> TaxonRelationships { get; set; }
+        DbSet<TaxonRole> TaxonRoles { get; set; }
+        DbSet<TaxonZone> TaxonZones { get; set; }
+        DbSet<TaxonZoneChange> TaxonZoneChanges { get; set; }
 
         DbSet<Era> Eras { get; set; }
 
