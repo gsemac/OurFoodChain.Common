@@ -26,6 +26,7 @@ namespace OurFoodChain.Data {
         DbSet<ZoneCommonName> ZoneCommonNames { get; set; }
 
         DbSet<Clade> Clades { get; set; }
+        DbSet<CladeAncestor> CladeAncestors { get; set; }
         DbSet<CladeCommonName> CladeCommonNames { get; set; }
         DbSet<CladeCreator> CladeCreators { get; set; }
         DbSet<CladeField> CladeFields { get; set; }

@@ -9,6 +9,8 @@ namespace OurFoodChain.Data {
 
     internal static class OfcDbContextUtilities {
 
+        // Public members
+
         public static void OnModelCreating(ModelBuilder modelBuilder) {
 
             // Custom value converters are used to work with types not supported by SQLite.
@@ -56,11 +58,6 @@ namespace OurFoodChain.Data {
                 .WithMany()
                 .HasForeignKey(e => e.ParentId);
 
-            modelBuilder.Entity<Clade>()
-                .HasOne(e => e.Ancestor)
-                .WithMany()
-                .HasForeignKey(e => e.AncestorId);
-
             // It is possible for multiple taxa of the same rank to share the same name.
             // While the most common example would be species, such instances exist for other ranks as well.
             // https://species.wikimedia.org/wiki/List_of_valid_homonyms
@@ -73,6 +70,8 @@ namespace OurFoodChain.Data {
             modelBuilder.Entity<Clade>()
                 .Property(e => e.Name)
                 .HasConversion(new CaseConversionStringConverter(StringCasing.Lower));
+
+            ConfigureCladeAncestor(modelBuilder);
 
             modelBuilder.Entity<CladeCommonName>()
                 .HasIndex(e => new { e.CladeId, e.CommonName })
@@ -97,6 +96,25 @@ namespace OurFoodChain.Data {
 
             modelBuilder.Entity<CladeZone>()
                 .HasKey(e => new { e.CladeId, e.ZoneId });
+
+        }
+
+        // Private members
+
+        private static void ConfigureCladeAncestor(ModelBuilder modelBuilder) {
+
+            modelBuilder.Entity<CladeAncestor>()
+                .HasKey(e => new { e.AncestorId, e.CladeId });
+
+            modelBuilder.Entity<CladeAncestor>()
+                .HasOne(e => e.Ancestor)
+                .WithMany(e => e.Ancestors)
+                .HasForeignKey(e => e.AncestorId);
+
+            modelBuilder.Entity<CladeAncestor>()
+                .HasOne(e => e.Clade)
+                .WithMany()
+                .HasForeignKey(e => e.CladeId);
 
         }
 
