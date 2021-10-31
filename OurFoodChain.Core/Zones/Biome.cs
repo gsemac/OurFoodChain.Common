@@ -1,6 +1,6 @@
 ﻿namespace OurFoodChain.Zones {
 
-    public enum ZoneType {
+    public enum Biome {
         None = 0,
         Custom,
         Aquatic,

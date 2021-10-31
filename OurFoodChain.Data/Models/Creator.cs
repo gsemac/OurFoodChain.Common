@@ -7,6 +7,7 @@ namespace OurFoodChain.Data.Models {
     public class Creator {
 
         public int Id { get; set; }
+
         [Required]
         public string DisplayName { get; set; }
         public ulong? DiscordUserId { get; set; }

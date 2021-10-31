@@ -2,7 +2,7 @@
 
 namespace OurFoodChain.Data.Models {
 
-    public class CustomSpeciesRelationship {
+    public class CustomRole {
 
         public int Id { get; set; }
         public int WorldId { get; set; }

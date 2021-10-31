@@ -23,7 +23,7 @@ namespace OurFoodChain.Data {
                 .HasKey(e => new { e.WorldId, e.CreatorId });
 
             modelBuilder.Entity<CreatorFavorite>()
-                .HasKey(e => new { e.CreatorId, e.SpeciesId });
+                .HasKey(e => new { e.CreatorId, e.CladeId });
 
             // Pictures
 
@@ -47,9 +47,19 @@ namespace OurFoodChain.Data {
             // Clades
 
             modelBuilder.Entity<Clade>()
-                .HasOne(e => e.DisplayedCommonName)
+                .HasOne(e => e.DisplayCommonName)
                 .WithOne(e => e.Clade)
-                .HasForeignKey<Clade>(e => e.DisplayedCommonNameId);
+                .HasForeignKey<Clade>(e => e.DisplayCommonNameId);
+
+            modelBuilder.Entity<Clade>()
+                .HasOne(e => e.Parent)
+                .WithMany()
+                .HasForeignKey(e => e.ParentId);
+
+            modelBuilder.Entity<Clade>()
+                .HasOne(e => e.Ancestor)
+                .WithMany()
+                .HasForeignKey(e => e.AncestorId);
 
             // It is possible for multiple taxa of the same rank to share the same name.
             // While the most common example would be species, such instances exist for other ranks as well.
@@ -68,31 +78,25 @@ namespace OurFoodChain.Data {
                 .HasIndex(e => new { e.CladeId, e.CommonName })
                 .IsUnique();
 
-            // Species
+            modelBuilder.Entity<CladeCreator>()
+                .HasKey(e => new { e.CladeId, e.CreatorId });
 
-            modelBuilder.Entity<Species>()
+            modelBuilder.Entity<CladeField>()
+                .HasKey(e => new { e.CladeId, e.Name });
+
+            modelBuilder.Entity<CladeRelationship>()
+                .HasKey(e => new { e.AgentId, e.PatientId, e.CustomRelationshipId, e.RelationshipType });
+
+            modelBuilder.Entity<CladeRole>()
+                .HasKey(e => new { e.CladeId, e.CustomRoleId, e.RoleType });
+
+            modelBuilder.Entity<CladeStatus>()
                 .HasOne(e => e.Clade)
-                .WithOne(e => e.Species)
-                .HasForeignKey<Species>(e => e.CladeId);
+                .WithOne()
+                .HasForeignKey<CladeStatus>(e => e.CladeId);
 
-            modelBuilder.Entity<Species>()
-                .HasIndex(e => new { e.CladeId })
-                .IsUnique();
-
-            modelBuilder.Entity<SpeciesCreator>()
-                .HasKey(e => new { e.SpeciesId, e.CreatorId });
-
-            modelBuilder.Entity<SpeciesRelationship>()
-                .HasKey(e => new { e.ObjectSpeciesId, e.SubjectSpeciesId, e.CustomRelationshipId, e.Relationship });
-
-            modelBuilder.Entity<SpeciesRole>()
-                .HasKey(e => new { e.SpeciesId, e.CustomRoleId, e.Role });
-
-            modelBuilder.Entity<SpeciesField>()
-                .HasKey(e => new { e.SpeciesId, e.Name });
-
-            modelBuilder.Entity<SpeciesZone>()
-                .HasKey(e => new { e.SpeciesId, e.ZoneId });
+            modelBuilder.Entity<CladeZone>()
+                .HasKey(e => new { e.CladeId, e.ZoneId });
 
         }
 

@@ -1,18 +1,21 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public abstract class SpeciesZoneBase {
+    public class CladeStatus {
 
-        public int SpeciesId { get; set; }
-        public int ZoneId { get; set; }
+        [Key, Required]
+        public int CladeId { get; set; }
+
+        [Required]
+        public ConservationStatus Status { get; set; } = ConservationStatus.NotEvaluated;
         public string Description { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual Species Species { get; set; }
-        public virtual Zone Zone { get; set; }
+        public virtual Clade Clade { get; set; }
 
     }
 

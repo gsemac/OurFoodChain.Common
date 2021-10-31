@@ -6,7 +6,6 @@ namespace OurFoodChain.Data.Dal {
          IUnitOfWork {
 
         ICladeRepository Clades { get; }
-        ISpeciesRepository Species { get; }
         IWorldRepository Worlds { get; }
 
     }

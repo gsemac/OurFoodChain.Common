@@ -1,6 +1,6 @@
 ﻿namespace OurFoodChain.Roles {
 
-    public enum EcologicalRoleId {
+    public enum EcologicalRole {
         None = 0,
         Custom,
         Scavenger,

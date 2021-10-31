@@ -16,6 +16,11 @@ namespace OurFoodChain.Data.Extensions {
             return queryable.Where(c => c.Name == name.ToLowerInvariant());
 
         }
+        public static IQueryable<Clade> FilterBy(this IQueryable<Clade> queryable, string genus, string species) {
+
+            return queryable.Where(c => c.Name == species && c.Parent.Name == genus);
+
+        }
         public static IQueryable<Clade> FilterBy(this IQueryable<Clade> queryable, Rank rank) {
 
             return queryable.Where(c => c.Rank == rank);

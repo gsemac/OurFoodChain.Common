@@ -9,8 +9,8 @@ namespace OurFoodChain.Data.Models {
         public int Id { get; set; }
         public int WorldId { get; set; }
         public int? GalleryId { get; set; }
-        public int? DisplayedCommonNameId { get; set; }
-        public int? DisplayedPictureId { get; set; }
+        public int? DisplayCommonNameId { get; set; }
+        public int? DisplayPictureId { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
@@ -19,9 +19,9 @@ namespace OurFoodChain.Data.Models {
 
         public virtual World World { get; set; }
         public virtual Gallery Gallery { get; set; }
-        public virtual CommonNameT DisplayedCommonName { get; set; }
+        public virtual CommonNameT DisplayCommonName { get; set; }
         public virtual IEnumerable<CommonNameT> CommonNames { get; }
-        public virtual Picture DisplayedPicture { get; set; }
+        public virtual Picture DisplayPicture { get; set; }
 
     }
 
