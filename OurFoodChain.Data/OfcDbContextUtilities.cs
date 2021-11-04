@@ -71,7 +71,7 @@ namespace OurFoodChain.Data {
                 .Property(e => e.Name)
                 .HasConversion(new CaseConversionStringConverter(StringCasing.Lower));
 
-            ConfigureCladeAncestor(modelBuilder);
+            ConfigureCladeAncestors(modelBuilder);
 
             modelBuilder.Entity<TaxonCommonName>()
                 .HasIndex(e => new { e.TaxonId, e.CommonName })
@@ -94,6 +94,8 @@ namespace OurFoodChain.Data {
                 .WithOne()
                 .HasForeignKey<TaxonStatus>(e => e.TaxonId);
 
+            ConfigureTaxonTags(modelBuilder);
+
             modelBuilder.Entity<TaxonZone>()
                 .HasKey(e => new { e.TaxonId, e.ZoneId });
 
@@ -101,7 +103,7 @@ namespace OurFoodChain.Data {
 
         // Private members
 
-        private static void ConfigureCladeAncestor(ModelBuilder modelBuilder) {
+        private static void ConfigureCladeAncestors(ModelBuilder modelBuilder) {
 
             modelBuilder.Entity<TaxonAncestor>()
                 .HasKey(e => new { e.AncestorId, e.TaxonId });
@@ -115,6 +117,12 @@ namespace OurFoodChain.Data {
                 .HasOne(e => e.Taxon)
                 .WithMany()
                 .HasForeignKey(e => e.TaxonId);
+
+        }
+        private static void ConfigureTaxonTags(ModelBuilder modelBuilder) {
+
+            modelBuilder.Entity<TaxonTag>()
+                .HasKey(e => new { e.TaxonId, e.TagId });
 
         }
 

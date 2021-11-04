@@ -4,20 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public class Role {
-
-        [Required, Key]
-        public int Id { get; set; }
-        [Required]
-        public int WorldId { get; set; }
+    public class TaxonTag {
 
         [Required]
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int TaxonId { get; set; }
+        [Required]
+        public int TagId { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
 
-        public virtual World World { get; set; }
+        public virtual Taxon Taxon { get; set; }
+        public virtual Tag Tag { get; set; }
 
     }
 

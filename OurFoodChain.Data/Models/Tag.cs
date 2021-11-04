@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OurFoodChain.Data.Models {
 
-    public class Biome {
+    public class Tag {
 
         [Required, Key]
         public int Id { get; set; }
@@ -13,13 +13,9 @@ namespace OurFoodChain.Data.Models {
 
         [Required]
         public string Name { get; set; }
-        public string EmojiIcon { get; set; }
-        public string HexColor { get; set; }
         public string Description { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;
-
-        public virtual World World { get; set; }
 
     }
 

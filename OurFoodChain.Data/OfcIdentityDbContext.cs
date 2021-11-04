@@ -13,7 +13,7 @@ namespace OurFoodChain.Data {
         public DbSet<CreatorWorldPermissions> CreatorPermissions { get; set; }
         public DbSet<CreatorFavorite> CreatorFavorites { get; set; }
         public DbSet<Relationship> Relationships { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public new DbSet<Role> Roles { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<GalleryPicture> GalleryPictures { get; set; }
@@ -26,12 +26,14 @@ namespace OurFoodChain.Data {
         public DbSet<TaxonCommonName> TaxonCommonNames { get; set; }
         public DbSet<TaxonCreator> TaxonCreators { get; set; }
         public DbSet<TaxonField> TaxonFields { get; set; }
-        public DbSet<TaxonStatus> TaxonStatuses { get; set; }
         public DbSet<TaxonRelationship> TaxonRelationships { get; set; }
         public DbSet<TaxonRole> TaxonRoles { get; set; }
+        public DbSet<TaxonStatus> TaxonStatuses { get; set; }
+        public DbSet<TaxonTag> TaxonTags { get; set; }
         public DbSet<TaxonZone> TaxonZones { get; set; }
         public DbSet<TaxonZoneChange> TaxonZoneChanges { get; set; }
         public DbSet<Era> Eras { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         public OfcIdentityDbContext(DbContextOptions options) :
             base(options) {

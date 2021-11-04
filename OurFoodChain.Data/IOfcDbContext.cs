@@ -30,13 +30,15 @@ namespace OurFoodChain.Data {
         DbSet<TaxonCommonName> TaxonCommonNames { get; set; }
         DbSet<TaxonCreator> TaxonCreators { get; set; }
         DbSet<TaxonField> TaxonFields { get; set; }
-        DbSet<TaxonStatus> TaxonStatuses { get; set; }
         DbSet<TaxonRelationship> TaxonRelationships { get; set; }
         DbSet<TaxonRole> TaxonRoles { get; set; }
+        DbSet<TaxonStatus> TaxonStatuses { get; set; }
+        DbSet<TaxonTag> TaxonTags { get; set; }
         DbSet<TaxonZone> TaxonZones { get; set; }
         DbSet<TaxonZoneChange> TaxonZoneChanges { get; set; }
 
         DbSet<Era> Eras { get; set; }
+        DbSet<Tag> Tags { get; set; }
 
     }
 
