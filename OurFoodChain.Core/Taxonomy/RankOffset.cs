@@ -1,7 +1,7 @@
 ﻿namespace OurFoodChain.Taxonomy {
 
-    public enum RankPosition {
-        On,
+    public enum RankOffset {
+        None = 0,
         Before,
         After
     }

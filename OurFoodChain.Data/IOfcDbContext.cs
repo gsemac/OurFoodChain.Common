@@ -13,15 +13,15 @@ namespace OurFoodChain.Data {
         DbSet<CreatorWorldPermissions> CreatorPermissions { get; set; }
         DbSet<CreatorFavorite> CreatorFavorites { get; set; }
 
-        DbSet<CustomRelationship> CustomRelationships { get; set; }
-        DbSet<CustomRole> CustomRoles { get; set; }
+        DbSet<Relationship> Relationships { get; set; }
+        DbSet<Role> Roles { get; set; }
 
         DbSet<Picture> Pictures { get; set; }
         DbSet<Gallery> Galleries { get; set; }
         DbSet<GalleryPicture> GalleryPictures { get; set; }
 
         DbSet<Zone> Zones { get; set; }
-        DbSet<CustomBiome> CustomBiomes { get; set; }
+        DbSet<Biome> Biomes { get; set; }
         DbSet<ZoneField> ZoneFields { get; set; }
         DbSet<ZoneCommonName> ZoneCommonNames { get; set; }
 

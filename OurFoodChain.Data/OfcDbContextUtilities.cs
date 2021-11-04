@@ -84,10 +84,10 @@ namespace OurFoodChain.Data {
                 .HasKey(e => new { e.TaxonId, e.Name });
 
             modelBuilder.Entity<TaxonRelationship>()
-                .HasKey(e => new { e.AgentId, e.PatientId, e.CustomRelationshipId, e.RelationshipType });
+                .HasKey(e => new { e.AgentId, e.PatientId, e.RelationshipId });
 
             modelBuilder.Entity<TaxonRole>()
-                .HasKey(e => new { e.TaxonId, e.CustomRoleId, e.RoleType });
+                .HasKey(e => new { e.TaxonId, e.RoleId });
 
             modelBuilder.Entity<TaxonStatus>()
                 .HasOne(e => e.Taxon)

@@ -9,7 +9,7 @@ namespace OurFoodChain.Data.Models {
         public int? ParentId { get; set; }
 
         public Rank Rank { get; set; } = Rank.Unranked;
-        public RankPosition Position { get; set; } = RankPosition.On;
+        public RankOffset Offset { get; set; } = RankOffset.None;
 
         public virtual IEnumerable<TaxonAncestor> Ancestors { get; set; }
         public virtual Taxon Parent { get; set; }

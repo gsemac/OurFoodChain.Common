@@ -11,13 +11,13 @@ namespace OurFoodChain.Data {
         public DbSet<Creator> Creators { get; set; }
         public DbSet<CreatorWorldPermissions> CreatorPermissions { get; set; }
         public DbSet<CreatorFavorite> CreatorFavorites { get; set; }
-        public DbSet<CustomRelationship> CustomRelationships { get; set; }
-        public DbSet<CustomRole> CustomRoles { get; set; }
+        public DbSet<Relationship> Relationships { get; set; }
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Gallery> Galleries { get; set; }
         public DbSet<GalleryPicture> GalleryPictures { get; set; }
         public DbSet<Zone> Zones { get; set; }
-        public DbSet<CustomBiome> CustomBiomes { get; set; }
+        public DbSet<Biome> Biomes { get; set; }
         public DbSet<ZoneField> ZoneFields { get; set; }
         public DbSet<ZoneCommonName> ZoneCommonNames { get; set; }
         public DbSet<Taxon> Taxa { get; set; }
