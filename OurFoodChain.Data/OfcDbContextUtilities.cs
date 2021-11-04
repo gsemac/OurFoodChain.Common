@@ -103,6 +103,11 @@ namespace OurFoodChain.Data {
 
         // Private members
 
+        private static void ConfigureBiomes(ModelBuilder modelBuilder) {
+
+
+
+        }
         private static void ConfigureCladeAncestors(ModelBuilder modelBuilder) {
 
             modelBuilder.Entity<TaxonAncestor>()
