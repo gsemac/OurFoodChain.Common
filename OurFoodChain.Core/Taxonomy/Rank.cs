@@ -2,7 +2,6 @@
 
     public enum Rank {
         Unranked = 0,
-        Custom,
         Domain,
         Kingdom,
         Phylum,
