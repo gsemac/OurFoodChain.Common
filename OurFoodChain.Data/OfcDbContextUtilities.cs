@@ -80,6 +80,8 @@ namespace OurFoodChain.Data {
             modelBuilder.Entity<TaxonCreator>()
                 .HasKey(e => new { e.TaxonId, e.CreatorId });
 
+            ConfigureTaxonEras(modelBuilder);
+
             modelBuilder.Entity<TaxonField>()
                 .HasKey(e => new { e.TaxonId, e.Name });
 
@@ -103,11 +105,6 @@ namespace OurFoodChain.Data {
 
         // Private members
 
-        private static void ConfigureBiomes(ModelBuilder modelBuilder) {
-
-
-
-        }
         private static void ConfigureCladeAncestors(ModelBuilder modelBuilder) {
 
             modelBuilder.Entity<TaxonAncestor>()
@@ -122,6 +119,12 @@ namespace OurFoodChain.Data {
                 .HasOne(e => e.Taxon)
                 .WithMany()
                 .HasForeignKey(e => e.TaxonId);
+
+        }
+        private static void ConfigureTaxonEras(ModelBuilder modelBuilder) {
+
+            modelBuilder.Entity<TaxonEra>()
+                .HasKey(e => new { e.TaxonId, e.EraId });
 
         }
         private static void ConfigureTaxonTags(ModelBuilder modelBuilder) {

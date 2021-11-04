@@ -29,6 +29,7 @@ namespace OurFoodChain.Data {
         DbSet<TaxonAncestor> TaxonAncestors { get; set; }
         DbSet<TaxonCommonName> TaxonCommonNames { get; set; }
         DbSet<TaxonCreator> TaxonCreators { get; set; }
+        DbSet<TaxonEra> TaxonEras { get; set; }
         DbSet<TaxonField> TaxonFields { get; set; }
         DbSet<TaxonRelationship> TaxonRelationships { get; set; }
         DbSet<TaxonRole> TaxonRoles { get; set; }
